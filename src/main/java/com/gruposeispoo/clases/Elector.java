@@ -30,6 +30,7 @@ public class Elector {
 	 * @param domicilio, domicilio del elector
 	 * @param dni,       dni del elector
 	 * 
+	 * @author Kevin
 	 */
 	public Elector(String nombre, String apellido, LocalDate fechaNac, TipoDocumento tipoDni,
 			Domicilio domicilio, int dni) {
@@ -39,6 +40,19 @@ public class Elector {
 		this.tipoDni = tipoDni;
 		this.domicilio = domicilio;
 		this.dni = dni;
+	}
+
+	/**
+	 * Constructor parametrizado (usado para crear Diputadoss)
+	 *
+	 * @param nombre,   nombre del elector
+	 * @param apellido, apellido del elector
+	 * 
+	 * @author Kevin
+	 */
+	public Elector(String nombre, String apellido) {
+		this.nombre = nombre;
+		this.apellido = apellido;
 	}
 
 	/**
@@ -239,7 +253,7 @@ public class Elector {
 
 	@Override
 	public String toString() {
-		return "Elector{" + "nombre=" + nombre + ", apellido=" + apellido + ", DNI=" + tipoDni
+		return "nombre=" + nombre + ", apellido=" + apellido + ", DNI=" + tipoDni
 				+ ", fechaNac=" + fechaNac + ", puedeVotar=" + puedeVotar + ", domicilio="
 				+ domicilio + '}';
 	}

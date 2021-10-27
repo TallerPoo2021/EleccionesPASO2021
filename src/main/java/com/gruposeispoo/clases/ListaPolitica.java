@@ -89,6 +89,6 @@ public class ListaPolitica {
 	@Override
 	public String toString() {
 		return "ListaPolitica [nombre=" + nombre + ", numero=" + numero + ", partidoPolitico="
-				+ partidoPolitico + "]";
+				+ partidoPolitico + "Senadores: " + senadores + "Diputados " + diputados + "]";
 	}
 }

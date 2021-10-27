@@ -4,11 +4,34 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import javax.swing.text.html.HTMLDocument.HTMLReader.ParagraphAction;
+
 public class PartidoPolitico {
 	private boolean esAlianza;
 	private String nombre;
 	private List<ListaPolitica> listaPolitica = new ArrayList<ListaPolitica>(); // representa
 	private List<PartidoPolitico> partidoPolitico;// tiene
+
+	/**
+	 * Contructor parametrizado para los que no son alianzas.
+	 *
+	 * @param nombre, nombre del partido
+	 *
+	 */
+	public PartidoPolitico(String nombre) {
+		this.nombre = nombre;
+	}
+
+	/**
+	 * Contructor parametrizado para los que si son alianzas.
+	 *
+	 * @param nombre,          nombre del partido
+	 * @param partidoPolitico, partido politico que pertenecen
+	 */
+	public PartidoPolitico(String nombre, List<PartidoPolitico> partidoPolitico) {
+		this.nombre = nombre;
+		this.partidoPolitico = partidoPolitico;
+	}
 
 	public PartidoPolitico(boolean esAlianza, String nombre, List<ListaPolitica> listaPolitica) {
 		this.esAlianza = esAlianza;

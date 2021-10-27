@@ -35,4 +35,13 @@ public class Distrito implements IContadorVoto {
         }
         return contador;
     }
+
+	@Override
+	public String toString() {
+		return "Distrito [MAX_SENADORES=" + MAX_SENADORES + ", MAX_DIPUTADOS=" + MAX_DIPUTADOS
+				+ ", nombre=" + nombre + ", secciones=" + secciones + ", padron=" + padron
+				+ ", listasPoliticas=" + listasPoliticas + "]";
+	}
+    
+    
 }
