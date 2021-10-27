@@ -7,16 +7,17 @@ import com.gruposeispoo.clases.Admin;
 import com.gruposeispoo.clases.ListaPolitica;
 
 public class Controlador {
-
-    private static List<ListaPolitica> listaDePrueba;
-
+    
+    private static List<ListaPolitica> listas;
+    
+    private Admin admin;
     /**
-     * Constructor
+     * CONSTRUCTOR
      *
      */
     public Controlador() {
-//        listaDePrueba = new ArrayList<>();
-    	listaDePrueba = Admin.generaListas();
+        listas = new ArrayList<>();
+        admin = new Admin();
     }
 
     /**
@@ -57,14 +58,9 @@ public class Controlador {
      *
      * @return
      */
-    public static List<ListaPoliticaPruebaBorrar> getListasPolticas() {
+    public static List<ListaPolitica> getListasPolticas() {
 
-        /*
-            IMPLEMENTAR ESTE MÉTODO
-        */
-        for (int i = 0; i < 10; i++) {
-            listaDePrueba.add(new ListaPoliticaPruebaBorrar(495, "Entrerrianos por la riqueza y el legado"));
-        }
-        return listaDePrueba;
+        listas = Admin.generaListas();
+        return listas;
     }
 }
