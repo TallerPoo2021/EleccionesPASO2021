@@ -1,5 +1,7 @@
 package com.gruposeispoo.clases;
 
+import com.opencsv.CSVReader;
+import com.opencsv.exceptions.CsvValidationException;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -7,8 +9,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.opencsv.CSVReader;
-import com.opencsv.exceptions.CsvValidationException;
+
 
 public class LeerArchivos {
 	private File archivo;
