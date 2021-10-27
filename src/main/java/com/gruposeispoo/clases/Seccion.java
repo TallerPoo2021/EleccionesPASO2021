@@ -1,5 +1,6 @@
 package com.gruposeispoo.clases;
 
+
 import java.util.List;
 
 public class Seccion implements IContadorVoto {
@@ -38,10 +39,20 @@ public class Seccion implements IContadorVoto {
     }
 
     @Override
-    public int contarVotos() {
+    public int contarVotosBlanco() {
+        return 0;
+    }
+
+    @Override
+    public int contarVotosBlanco(TipoCandidato tipoCandidato) {
+        return 0;
+    }
+
+    @Override
+    public int contarVotos(Candidato candidato) {
         int contador = 0;
         for (Circuito circuito : circuitos) {
-            contador += circuito.contarVotos();
+            contador += circuito.contarVotos(candidato);
         }
         return contador;
     }

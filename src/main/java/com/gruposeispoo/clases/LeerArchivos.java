@@ -55,7 +55,7 @@ public class LeerArchivos {
 						LocalDate.of(anioNacimiento, mesNacimiento, diaNacimiento),
 						TipoDocumento.valueOf(fila[5]),
 						new Domicilio(fila[6], fila[7], fila[8], fila[9]),
-						Integer.parseInt(fila[10]));
+						Integer.parseInt(fila[10]), CamaraElectoral.encontrarMesa(Integer.parseInt(fila[11])));
 
 				listaElectores.add(electorAux);
 			}

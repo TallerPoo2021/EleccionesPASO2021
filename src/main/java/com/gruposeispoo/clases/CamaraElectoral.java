@@ -7,8 +7,8 @@ import java.util.Objects;
 
 public class CamaraElectoral {
 
-	private Distrito[] distritos = new Distrito[24];
-	private List<PartidoPolitico> partidosPoliticos = new ArrayList<PartidoPolitico>();
+	private static Distrito[] distritos;
+	private List<PartidoPolitico> partidosPoliticos;
 	private PadronElectoral padronOficial;
 
 	public CamaraElectoral(Distrito[] distritos, List<PartidoPolitico> partidosPoliticos,
@@ -59,6 +59,19 @@ public class CamaraElectoral {
 		return Objects.equals(partidosPoliticos, other.partidosPoliticos);
 	}
 
+	public static MesaElectoral encontrarMesa(int codigoMesa){
+		for (Distrito distrito : distritos) {
+			for (Seccion seccion : distrito.getSecciones()) {
+				for (Circuito circuito : seccion.getCircuitos()) {
+					for (MesaElectoral mesaElectoral : circuito.getListaMesas()) {
+						if (mesaElectoral.getNumero() == codigoMesa) return mesaElectoral;
+					}
+				}
+			}
+		}
+		return null;
+	}
+
 	// -----
 	
 	public boolean verificarLista(List<Candidato> candidatos, ListaPolitica lsitaPolitica) {
@@ -70,7 +83,7 @@ public class CamaraElectoral {
 	}
 
 	public double getPorcentajeElectores(Distrito distrito) {
-		return 0f;
+		return padronOficial.getElectores().size();
 	}
 
 //	public Map<PartidoPolitico, Double> getPorcentajeVotos(Distrito distrito) {

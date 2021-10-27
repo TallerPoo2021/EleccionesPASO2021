@@ -1,4 +1,5 @@
 package com.gruposeispoo.clases;
+
 import java.util.List;
 
 public class Distrito implements IContadorVoto {
@@ -15,14 +16,38 @@ public class Distrito implements IContadorVoto {
         this.nombre = nombre;
         this.secciones = secciones;
         this.padron = padron;
+        for (ListaPolitica listaPolitica : listasPoliticas) {
+            if (listaPolitica.getDiputados().size() > MAX_DIPUTADOS || listaPolitica.getSenadores().size() > MAX_SENADORES) {
+                listasPoliticas.remove(listaPolitica);
+                System.out.println("La lista " + listaPolitica.getNombre() + " excede la cantidad de senadores y/o diputados posibles para este distrito por lo tanto fue removido.");
+            }
+        }
         this.listasPoliticas = listasPoliticas;
     }
 
     @Override
-    public int contarVotos() {
+    public int contarVotosBlanco() {
         int contador = 0;
         for (Seccion seccion : secciones) {
-            contador += seccion.contarVotos();
+            contador += seccion.contarVotosBlanco();
+        }
+        return contador;
+    }
+
+    @Override
+    public int contarVotosBlanco(TipoCandidato tipoCandidato) {
+        int contador = 0;
+        for (Seccion seccion : secciones) {
+            contador += seccion.contarVotosBlanco(tipoCandidato);
+        }
+        return contador;
+    }
+
+    @Override
+    public int contarVotos(Candidato candidato) {
+        int contador = 0;
+        for (Seccion seccion : secciones) {
+            contador += seccion.contarVotos(candidato);
         }
         return contador;
     }
@@ -36,12 +61,27 @@ public class Distrito implements IContadorVoto {
         return contador;
     }
 
-	@Override
-	public String toString() {
-		return "Distrito [MAX_SENADORES=" + MAX_SENADORES + ", MAX_DIPUTADOS=" + MAX_DIPUTADOS
-				+ ", nombre=" + nombre + ", secciones=" + secciones + ", padron=" + padron
-				+ ", listasPoliticas=" + listasPoliticas + "]";
-	}
-    
-    
+    public int getMAX_SENADORES() {
+        return MAX_SENADORES;
+    }
+
+    public int getMAX_DIPUTADOS() {
+        return MAX_DIPUTADOS;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public List<Seccion> getSecciones() {
+        return secciones;
+    }
+
+    public List<Elector> getPadron() {
+        return padron;
+    }
+
+    public List<ListaPolitica> getListasPoliticas() {
+        return listasPoliticas;
+    }
 }

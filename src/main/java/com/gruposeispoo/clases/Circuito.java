@@ -24,7 +24,8 @@ public class Circuito implements IContadorVoto {
     }
 
     public void agregarVoto(Voto voto) throws Exception {
-        if(voto == null) throw new NullPointerException();
+        if (voto == null) throw new NullPointerException();
+        if (!listaMesas.contains(voto.getElector().getMesaElectoral())) throw new Exception("Este elector no vota en esta mesa.");
         if (votosCircuito.contains(voto)) throw new Exception("La persona DNI Nº " + voto.getElector().getDNI() + " ya votó.");
         votosCircuito.add(voto);
     }
@@ -54,15 +55,40 @@ public class Circuito implements IContadorVoto {
     }
 
     @Override
-    public int contarVotos() {
-        return votosCircuito.size();
+    public int contarVotosBlanco(){
+        int contador = 0;
+        for (Voto voto : votosCircuito) {
+            if (voto.getSenadores() == null || voto.getDiputados() == null) contador++;
+        }
+        return contador;
+    }
+
+    @Override
+    public int contarVotosBlanco(TipoCandidato tipoCandidato){
+        int contador = 0;
+        for (Voto voto : votosCircuito) {
+            if (tipoCandidato == TipoCandidato.SENADOR && voto.getSenadores() == null) contador++;
+            if (tipoCandidato == TipoCandidato.DIPUTADO && voto.getDiputados() == null) contador++;
+        }
+        return contador;
+    }
+
+    @Override
+    public int contarVotos(Candidato candidato) {
+        int contador = 0;
+        for (Voto voto : votosCircuito) {
+            if ((voto.getSenadores() != null && voto.getSenadores().contains(candidato)) || (voto.getDiputados() != null && voto.getDiputados().contains(candidato))) contador++;
+        }
+        return contador;
     }
 
     @Override
     public int contarVotos(ListaPolitica listaPolitica) {
         int contador = 0;
         for (Voto voto : votosCircuito) {
-            if (voto.getListasVotadas().contains(listaPolitica)) contador++;
+            if (voto.obtenerListasPoliticas().contains(listaPolitica)){
+                contador++;
+            }
         }
         return contador;
     }
