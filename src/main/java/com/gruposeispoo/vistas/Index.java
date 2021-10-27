@@ -17,7 +17,7 @@ import org.netbeans.lib.awtextra.AbsoluteConstraints;
 
 public class Index extends javax.swing.JFrame {
 
-    private AdminLoginPane adminLoginPane = new AdminLoginPane();
+    private AdminLoginPane adminLoginPane = new AdminLoginPane(this);
     private IndexPane indexPane = new IndexPane(this);
     private UserLoginPane userLoginPane = new UserLoginPane(this);
     public static Controlador controlador = new Controlador();

@@ -1,18 +1,46 @@
 package com.gruposeispoo.vistas.admin;
 
+import com.gruposeispoo.app.Controlador;
+import com.gruposeispoo.vistas.Index;
 import java.awt.Color;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
-import org.netbeans.lib.awtextra.AbsoluteConstraints;
 
 public class AdminLoginPane extends javax.swing.JPanel {
+    /*
+        COMENTADO: NO ELIMINAR EL ATRIBUTO DE ABAJO (SE ESTA TRABAJANDO EN LA CLASE adminGraficoPrueba
+    */
+    //private AdminGraficoPrueba adminGraficoPrueba = new AdminGraficoPrueba();
+    
+    private Index contenedor;
+    /**
+     * Usuario comienza vacio. No nulo, no con espacios.
+     */
+    private String usuario = "";
+    /**
+     * Contrasenia comienza vacia. No nula, no con espacios.
+     */
+    private String contrasenia = "";
 
-    //private IndexPane indexPane = new IndexPane();
-    private String userContra = "admin";
-
-    public AdminLoginPane() {
+    /**
+     * CONSTRUCTOR
+     *
+     * @param contenedor
+     */
+    public AdminLoginPane(Index contenedor) {
         initComponents();
+        this.contenedor = contenedor;
+        setIngresoSistemaAuditor(false);
+    }
+
+    /**
+     * Activa (activado == true) o desactiva (activado == false) el acceso al
+     * sistema auditor
+     *
+     * @param activado
+     */
+    private void setIngresoSistemaAuditor(boolean activado) {
+        btnIngresarTxt.setVisible(activado);
     }
 
     /**
@@ -23,21 +51,6 @@ public class AdminLoginPane extends javax.swing.JPanel {
      */
     private void setButtonIcon(JLabel etiqueta, String rutaRelativaIcon) {
         etiqueta.setIcon(new ImageIcon(getClass().getResource(rutaRelativaIcon)));
-    }
-
-    /**
-     * Actualiza el contenido principal de la ventana
-     *
-     * @param actualContenedor
-     * @param nuevoContenedor
-     */
-    private void actualizarContentPane(JPanel actualContenedor, JPanel nuevoContenedor) {
-        nuevoContenedor.setSize(700, 590);
-
-        actualContenedor.removeAll();
-        actualContenedor.add(nuevoContenedor, new AbsoluteConstraints(0, 0, -1, -1));
-        actualContenedor.revalidate();
-        actualContenedor.repaint();
     }
 
     @SuppressWarnings("unchecked")
@@ -190,6 +203,7 @@ public class AdminLoginPane extends javax.swing.JPanel {
 
         contentContainer.add(adminCardContainer, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 190, 240, 200));
 
+        btnIngresarContainer.setBackground(new java.awt.Color(245, 244, 246));
         btnIngresarContainer.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnIngresarTxt.setBackground(new java.awt.Color(43, 179, 205));
@@ -200,6 +214,9 @@ public class AdminLoginPane extends javax.swing.JPanel {
         btnIngresarTxt.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnIngresarTxt.setOpaque(true);
         btnIngresarTxt.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnIngresarTxtMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnIngresarTxtMouseEntered(evt);
             }
@@ -364,20 +381,36 @@ public class AdminLoginPane extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * El input de usuario gana el foco, se vacia y cambia su color de letra
+     *
+     * @param evt
+     */
     private void inputUsuarioFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_inputUsuarioFocusGained
         if (inputUsuario.getText().isEmpty()) {
             inputUsuario.setText("");
             inputUsuario.setForeground(new Color(57, 77, 93));
         }
     }//GEN-LAST:event_inputUsuarioFocusGained
-
+    /**
+     * El input de usuario pierde el foco, si esta vacio o con espacios, se
+     * cambia el color de letra y se le establece el text por defecto
+     *
+     * @param evt
+     */
     private void inputUsuarioFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_inputUsuarioFocusLost
         if (inputUsuario.getText().isEmpty() || inputUsuario.getText().isBlank()) {
             inputUsuario.setForeground(new Color(153, 153, 153));
             inputUsuario.setText("Ingrese su nombre de usuario");
         }
     }//GEN-LAST:event_inputUsuarioFocusLost
-
+    /**
+     * El input de usuario tiene el mouse presionado sobre el mismo. Si el input
+     * tiene el texto por defecto lo vaciamos y le cambiamos el color de la
+     * letra
+     *
+     * @param evt
+     */
     private void inputUsuarioMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inputUsuarioMousePressed
         if (inputUsuario.getText().equals("Ingrese su nombre de usuario")) {
             inputUsuario.setText("");
@@ -388,19 +421,34 @@ public class AdminLoginPane extends javax.swing.JPanel {
     private void inputUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputUsuarioActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_inputUsuarioActionPerformed
-
+    /**
+     * El input de usuario tiene una tecla presionada. Si el input tiene el
+     * texto por defecto lo vaciamos y le cambiamos el color de la letra
+     *
+     *
+     * @param evt
+     */
     private void inputUsuarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_inputUsuarioKeyPressed
         if (inputUsuario.getText().equals("Ingrese su nombre de usuario")) {
             inputUsuario.setText("");
             inputUsuario.setForeground(new Color(57, 77, 93));
         }
     }//GEN-LAST:event_inputUsuarioKeyPressed
-
+    /**
+     * El input del usuario tiene una tecla levantada. Verificamos si el texto
+     * ingresado corresponde a un nombre de usuario
+     *
+     * @param evt
+     */
     private void inputUsuarioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_inputUsuarioKeyReleased
-        if (inputUsuario.getText().equals(userContra)) {
+        if (Controlador.existeUsuario(inputUsuario.getText())) {
+            usuario = inputUsuario.getText();
             setButtonIcon(InputUsuarioCheckerIcon, //Etiqueta
                     "/com/gruposeispoo/vistas/images/check.png");    //RutaRelativaIcon
         } else {
+            usuario = "";
+            inputContraseniaKeyReleased(evt);
+            inputContrasenia.setText("");
             if (!inputUsuario.getText().isEmpty()) {
                 setButtonIcon(InputUsuarioCheckerIcon, //Etiqueta
                         "/com/gruposeispoo/vistas/images/error.png");    //RutaRelativaIcon
@@ -410,7 +458,11 @@ public class AdminLoginPane extends javax.swing.JPanel {
             }
         }
     }//GEN-LAST:event_inputUsuarioKeyReleased
-
+    /**
+     * El input de contrasenia gana el foco, se vacia y cambia su color de letra
+     *
+     * @param evt
+     */
     private void inputContraseniaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_inputContraseniaFocusGained
         String contra = String.valueOf(inputContrasenia.getPassword());
 
@@ -420,6 +472,12 @@ public class AdminLoginPane extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_inputContraseniaFocusGained
 
+    /**
+     * El input de contrasenia pierde el foco, si esta vacio o con espacios, se
+     * cambia el color de letra y se le establece el text por defecto
+     *
+     * @param evt
+     */
     private void inputContraseniaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_inputContraseniaFocusLost
         String contra = String.valueOf(inputContrasenia.getPassword());
 
@@ -428,7 +486,13 @@ public class AdminLoginPane extends javax.swing.JPanel {
             inputContrasenia.setText("********");
         }
     }//GEN-LAST:event_inputContraseniaFocusLost
-
+    /**
+     * El input de contrasenia tiene el mouse presionado sobre el mismo. Si el
+     * input tiene el texto por defecto lo vaciamos y le cambiamos el color de
+     * la letra
+     *
+     * @param evt
+     */
     private void inputContraseniaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inputContraseniaMousePressed
         String contra = String.valueOf(inputContrasenia.getPassword());
 
@@ -441,7 +505,13 @@ public class AdminLoginPane extends javax.swing.JPanel {
     private void inputContraseniaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputContraseniaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_inputContraseniaActionPerformed
-
+    /**
+     * El input de contrasenia tiene una tecla presionada. Si el input tiene el
+     * texto por defecto lo vaciamos y le cambiamos el color de la letra
+     *
+     *
+     * @param evt
+     */
     private void inputContraseniaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_inputContraseniaKeyPressed
         String contra = String.valueOf(inputContrasenia.getPassword());
 
@@ -450,14 +520,29 @@ public class AdminLoginPane extends javax.swing.JPanel {
             inputContrasenia.setForeground(new Color(57, 77, 93));
         }
     }//GEN-LAST:event_inputContraseniaKeyPressed
-
+    /**
+     * El input del contrasenia tiene una tecla levantada. Verificamos si el
+     * texto ingresado corresponde a un nombre de usuario
+     *
+     * @param evt
+     */
     private void inputContraseniaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_inputContraseniaKeyReleased
         String contra = String.valueOf(inputContrasenia.getPassword());
 
-        if (contra.equals(userContra)) {
-            setButtonIcon(InputContraseniaCheckerIcon, //Etiqueta
-                    "/com/gruposeispoo/vistas/images/check.png");    //RutaRelativaIcon
+        if (!usuario.isEmpty()) {
+            contrasenia = contra;
+            if (Controlador.verificadorDeUsuario(usuario, contrasenia)) {
+                setButtonIcon(InputContraseniaCheckerIcon, //Etiqueta
+                        "/com/gruposeispoo/vistas/images/check.png");    //RutaRelativaIcon
+                setIngresoSistemaAuditor(true);
+            } else {
+                setIngresoSistemaAuditor(false);
+                setButtonIcon(InputContraseniaCheckerIcon, //Etiqueta
+                        "/com/gruposeispoo/vistas/images/error.png");    //RutaRelativaIcon
+            }
         } else {
+            setIngresoSistemaAuditor(false);
+            contrasenia = "";
             if (!contra.isEmpty()) {
                 setButtonIcon(InputContraseniaCheckerIcon, //Etiqueta
                         "/com/gruposeispoo/vistas/images/error.png");    //RutaRelativaIcon
@@ -469,11 +554,11 @@ public class AdminLoginPane extends javax.swing.JPanel {
     }//GEN-LAST:event_inputContraseniaKeyReleased
 
     private void btnIngresarTxtMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnIngresarTxtMouseEntered
-        btnIngresarTxt.setBackground(new Color(58,77,92));
+        btnIngresarTxt.setBackground(new Color(58, 77, 92));
     }//GEN-LAST:event_btnIngresarTxtMouseEntered
 
     private void btnIngresarTxtMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnIngresarTxtMouseExited
-        btnIngresarTxt.setBackground(new Color(43,179,205));
+        btnIngresarTxt.setBackground(new Color(43, 179, 205));
     }//GEN-LAST:event_btnIngresarTxtMouseExited
 
     private void btnExitTxtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnExitTxtMouseClicked
@@ -495,6 +580,11 @@ public class AdminLoginPane extends javax.swing.JPanel {
     private void headerBarContainerMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_headerBarContainerMousePressed
 
     }//GEN-LAST:event_headerBarContainerMousePressed
+
+    private void btnIngresarTxtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnIngresarTxtMouseClicked
+        //NO ELIMINAR LA LINEA DE ABAJO:SE ESTÁTRABAJANDO EN adminGraficoPrueba
+        //contenedor.actualizarContentPane(adminGraficoPrueba);
+    }//GEN-LAST:event_btnIngresarTxtMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
