@@ -3,6 +3,7 @@ com\gruposeispoo\app\ListaPoliticaPruebaBorrar.class
 com\gruposeispoo\clases\Circuito.class
 com\gruposeispoo\vistas\admin\AdminLoginPane$6.class
 com\gruposeispoo\vistas\Index$7.class
+com\gruposeispoo\vistas\admin\AdminGraficoPrueba$1.class
 com\gruposeispoo\vistas\IndexPane.class
 com\gruposeispoo\vistas\admin\AdminLoginPane$3.class
 com\gruposeispoo\vistas\usuarios\UserLoginPane$2.class
@@ -16,6 +17,7 @@ com\gruposeispoo\vistas\IndexPane$4.class
 com\gruposeispoo\vistas\usuarios\UserVotoListaPane.class
 com\gruposeispoo\vistas\Index$1.class
 com\gruposeispoo\vistas\IndexPane$2.class
+com\gruposeispoo\vistas\admin\AdminGraficoPrueba$2.class
 com\gruposeispoo\vistas\usuarios\UserBoletaPane.class
 com\gruposeispoo\vistas\Index$8.class
 com\gruposeispoo\vistas\admin\AdminLoginPane$5.class
@@ -24,6 +26,7 @@ com\gruposeispoo\vistas\admin\AdminLoginPane$11.class
 com\gruposeispoo\vistas\usuarios\UserVotoCatePane.class
 com\gruposeispoo\vistas\usuarios\UserVotoListaPane$4.class
 com\gruposeispoo\app\App.class
+com\gruposeispoo\vistas\admin\AdminGraficoPrueba$3.class
 com\gruposeispoo\vistas\usuarios\UserVotoListaPane$5.class
 com\gruposeispoo\vistas\admin\AdminLoginPane.class
 com\gruposeispoo\clases\PadronElectoral.class
@@ -41,6 +44,7 @@ com\gruposeispoo\clases\TipoCandidato.class
 com\gruposeispoo\clases\Voto.class
 com\gruposeispoo\vistas\Index$3.class
 com\gruposeispoo\app\Controlador.class
+com\gruposeispoo\vistas\admin\AdminGraficoPrueba.class
 com\gruposeispoo\clases\Distrito.class
 com\gruposeispoo\vistas\usuarios\UserVotoCatePane$2.class
 com\gruposeispoo\vistas\usuarios\UserVotoPane$5.class
