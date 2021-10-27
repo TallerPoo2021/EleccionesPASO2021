@@ -1,7 +1,7 @@
 package com.gruposeispoo.vistas.usuarios;
 
 
-import com.gruposeispoo.app.ListaPoliticaPruebaBorrar;
+import com.gruposeispoo.clases.ListaPolitica;
 import com.gruposeispoo.vistas.Index;
 import java.awt.Color;
 import java.awt.Component;
@@ -54,9 +54,9 @@ public class UserVotoListaPane extends javax.swing.JPanel {
      * @param listasPoliticas, lista de listas politicas correspondientes
      */
     public void setBoletas() {
-        List<ListaPoliticaPruebaBorrar> listasPoliticas = Index.controlador.getListasPolticas();
+        List<ListaPolitica> listasPoliticas = Index.controlador.getListasPolticas();
 
-        for (ListaPoliticaPruebaBorrar listaPolitica : listasPoliticas) {
+        for (ListaPolitica listaPolitica : listasPoliticas) {
             UserBoletaPane nuevaBoleta = (UserBoletaPane) listaPoliticaABoletaPane(listaPolitica.getNumero(), listaPolitica.getNombre());
             boletas.add(nuevaBoleta);
         }
