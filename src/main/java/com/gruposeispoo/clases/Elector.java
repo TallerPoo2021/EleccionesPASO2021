@@ -1,203 +1,247 @@
 package com.gruposeispoo.clases;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 /**
  * 
- *   Representa una persona (ya sea elector o candidato) 
+ * Representa una persona (ya sea elector o candidato)
  * 
  */
 public class Elector {
-    private static int cantidadDeElectores = 0;
-    private int id;
-    private boolean puedeVotar;
-    private String nombre;
-    private String apellido;
-    private Date fechaNac;
-    private TipoDocumento DNI;
-    private Domicilio domicilio;
-    private Voto voto;
-    
-    /**
-     * 
-     * Constructor
-     * 
-     * Por defecto, al crearse un elector, este no est� habilitado para votar
-     * 
-     * 
-     */
-    public Elector() {
-        Elector.cantidadDeElectores++;
-        this.id = Elector.cantidadDeElectores;
-        this.puedeVotar = false;
-    }
+	private static int cantidadDeElectores = 0;
+	private int id;
+	private boolean puedeVotar;
+	private String nombre;
+	private String apellido;
+	private LocalDate fechaNac;
+	private TipoDocumento tipoDni;
+	private Domicilio domicilio;
+	private Voto voto;
+	private int dni;
 
-    /**
-     * Constructor parametrizado
-     * 
-     * @param nombre, nombre del elector
-     * @param apellido, apellido del elector
-     * @param fechaNac, fecha de nacimiento del elector
-     */
-    public Elector(String nombre, String apellido, Date fechaNac) {
-        this();
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.fechaNac = fechaNac;
-    }
-    
-    /**
-     * 
-     * Constructor parametrizado
-     * 
-     * @param nombre, nombre del elector
-     * @param apellido, apellido del elector
-     * @param DNI, DNI de TipoDocumento
-     * @param fechaNac, fecha de nacimiento del elector
-     * @param domicilio, domicilio del elector
-     */
-    public Elector(String nombre, String apellido, TipoDocumento DNI, Date fechaNac, Domicilio domicilio) {
-        this();
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.DNI = DNI;
-        this.fechaNac = fechaNac;
-        this.domicilio = domicilio;
-    }
+	/**
+	 * 
+	 * Constructor parametrizado (usado para cargar padron)
+	 * 
+	 * @param nombre,    nombre del elector
+	 * @param apellido,  apellido del elector
+	 * @param fechaNac,  fecha de nacimiento del elector
+	 * @param tipoDni,   DNI de TipoDocumento
+	 * @param domicilio, domicilio del elector
+	 * @param dni,       dni del elector
+	 * 
+	 */
+	public Elector(String nombre, String apellido, LocalDate fechaNac, TipoDocumento tipoDni,
+			Domicilio domicilio, int dni) {
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.fechaNac = fechaNac;
+		this.tipoDni = tipoDni;
+		this.domicilio = domicilio;
+		this.dni = dni;
+	}
 
-    public static int getCantidadDeElectores() {
-        return cantidadDeElectores;
-    }
+	/**
+	 * 
+	 * Constructor
+	 * 
+	 * Por defecto, al crearse un elector, este no est� habilitado para votar
+	 * 
+	 * 
+	 */
+	public Elector() {
+		Elector.cantidadDeElectores++;
+		this.id = Elector.cantidadDeElectores;
+		this.puedeVotar = false;
+	}
 
-    /**
-     * 
-     * @return int, el identificador �nico de este elector
-     */
-    public int getId() {
-        return id;
-    }  
-  
-    /**
-     * 
-     * Establece si esta elector esta habilitado para votar o no, dependiendo de su tipo de documento.
-     * 
-     */
-    public void setHabilitadoParaVotar(){
-        if (this.DNI == null) {
-            throw new NullPointerException("Falta setear el atributo DNI");
-        }
-        
-        boolean habilitado = this.DNI != TipoDocumento.DNI_EN_CELULAR && this.DNI != TipoDocumento.DNI_EN_TRAMITE;
-        this.puedeVotar = habilitado;
-    }
+	/**
+	 * Constructor parametrizado
+	 * 
+	 * @param nombre,   nombre del elector
+	 * @param apellido, apellido del elector
+	 * @param fechaNac, fecha de nacimiento del elector
+	 */
+	public Elector(String nombre, String apellido, LocalDate fechaNac) {
+		this();
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.fechaNac = fechaNac;
+	}
 
-    /**
-     * @return boolean, true si el elector esta habilitado para votar, false en caso contrario.
-     */
-    public boolean getPuedeVotar() {
-        return puedeVotar;
-    }
-    
-    /**
-     * 
-     * @return Voto, el voto realizado por este elector, NULL si este elector no ha votado a�n 
-     */
-    public Voto getVoto() {
-        return voto;
-    }
+	/**
+	 * 
+	 * Constructor parametrizado
+	 * 
+	 * @param nombre,    nombre del elector
+	 * @param apellido,  apellido del elector
+	 * @param DNI,       DNI de TipoDocumento
+	 * @param fechaNac,  fecha de nacimiento del elector
+	 * @param domicilio, domicilio del elector
+	 */
+	public Elector(String nombre, String apellido, TipoDocumento DNI, LocalDate fechaNac,
+			Domicilio domicilio) {
+		this();
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.tipoDni = DNI;
+		this.fechaNac = fechaNac;
+		this.domicilio = domicilio;
+	}
 
-    /**
-     * @param voto, el voto a setear
-     */
-    public void setVoto(Voto voto) {
-        this.voto = voto;
-    }
-    
-    /**
-     * 
-     * @return String, el nombre de este elector
-     */
-    public String getNombre() {
-        return nombre;
-    }
+	public static int getCantidadDeElectores() {
+		return cantidadDeElectores;
+	}
 
-    /**
-     * 
-     * @param nombre, el nombre a setear
-     */
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
+	/**
+	 * 
+	 * @return int, el identificador �nico de este elector
+	 */
+	public int getId() {
+		return id;
+	}
 
-    /**
-     * 
-     * @return String, el apellido de este elector
-     */
-    public String getApellido() {
-        return apellido;
-    }
+	/**
+	 * 
+	 * Establece si esta elector esta habilitado para votar o no, dependiendo de su
+	 * tipo de documento.
+	 * 
+	 */
+	public void setHabilitadoParaVotar() {
+		if (this.tipoDni == null) {
+			throw new NullPointerException("Falta setear el atributo DNI");
+		}
 
-    /**
-     * 
-     * @param apellido, el apellido a setear
-     */
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
-    }
+		boolean habilitado = this.tipoDni != TipoDocumento.DNI_EN_CELULAR
+				&& this.tipoDni != TipoDocumento.DNI_EN_TRAMITE;
+		this.puedeVotar = habilitado;
+	}
 
-    /**
-     * 
-     * @return TipoDocumento, el tipo de documento de este elector
-     */
-    public TipoDocumento getDNI() {
-        return DNI;
-    }
+	/**
+	 * @return boolean, true si el elector esta habilitado para votar, false en caso
+	 *         contrario.
+	 */
+	public boolean getPuedeVotar() {
+		return puedeVotar;
+	}
 
-    /**
-     * 
-     * @param DNI, el tipo de dni a setear
-     */
-    public void setDNI(TipoDocumento DNI) {
-        this.DNI = DNI;
-    }
+	/**
+	 * 
+	 * @return Voto, el voto realizado por este elector, NULL si este elector no ha
+	 *         votado a�n
+	 */
+	public Voto getVoto() {
+		return voto;
+	}
 
-    /**
-     * 
-     * @return Date, la fecha de nacimiento de este elector
-     */
-    public Date getFechaNac() {
-        return fechaNac;
-    }
+	/**
+	 * @param voto, el voto a setear
+	 */
+	public void setVoto(Voto voto) {
+		this.voto = voto;
+	}
 
-    /**
-     * 
-     * @param fechaNac, la fecha de nacimiento a setear
-     */
-    public void setFechaNac(Date fechaNac) {
-        this.fechaNac = fechaNac;
-    }
+	/**
+	 * 
+	 * @return String, el nombre de este elector
+	 */
+	public String getNombre() {
+		return nombre;
+	}
 
+	/**
+	 * 
+	 * @param nombre, el nombre a setear
+	 */
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
 
-    /**
-     * 
-     * @return Domicilio, el domicilio de este elector
-     */
-    public Domicilio getDomicilio() {
-        return domicilio;
-    }
+	/**
+	 * 
+	 * @return String, el apellido de este elector
+	 */
+	public String getApellido() {
+		return apellido;
+	}
 
-    /**
-     * 
-     * @param domicilio, el domicilio a setear 
-     */
-    public void setDomicilio(Domicilio domicilio) {
-        this.domicilio = domicilio;
-    }
+	/**
+	 * 
+	 * @param apellido, el apellido a setear
+	 */
+	public void setApellido(String apellido) {
+		this.apellido = apellido;
+	}
 
-    
-    @Override
-    public String toString() {
-        return "Elector{" + "nombre=" + nombre + ", apellido=" + apellido + ", DNI=" + DNI + ", fechaNac=" + fechaNac + ", puedeVotar=" + puedeVotar + ", domicilio=" + domicilio + '}';
-    }
-   
+	/**
+	 * 
+	 * @return TipoDocumento, el tipo de documento de este elector
+	 */
+	public TipoDocumento getDNI() {
+		return tipoDni;
+	}
+
+	/**
+	 * 
+	 * @param DNI, el tipo de dni a setear
+	 */
+	public void setDNI(TipoDocumento DNI) {
+		this.tipoDni = DNI;
+	}
+
+	/**
+	 * 
+	 * @return Date, la fecha de nacimiento de este elector
+	 */
+	public LocalDate getFechaNac() {
+		return fechaNac;
+	}
+
+	/**
+	 * 
+	 * @param fechaNac, la fecha de nacimiento a setear
+	 */
+	public void setFechaNac(LocalDate fechaNac) {
+		this.fechaNac = fechaNac;
+	}
+
+	/**
+	 * 
+	 * @return Domicilio, el domicilio de este elector
+	 */
+	public Domicilio getDomicilio() {
+		return domicilio;
+	}
+
+	/**
+	 * 
+	 * @param domicilio, el domicilio a setear
+	 */
+	public void setDomicilio(Domicilio domicilio) {
+		this.domicilio = domicilio;
+	}
+
+	/**
+	 *
+	 * @return dni, dni del votante
+	 */
+	public int getDni() {
+		return dni;
+	}
+
+	/**
+	 * 
+	 * @param dni, dni del votante
+	 */
+	public void setDni(int dni) {
+		this.dni = dni;
+	}
+
+	@Override
+	public String toString() {
+		return "Elector{" + "nombre=" + nombre + ", apellido=" + apellido + ", DNI=" + tipoDni
+				+ ", fechaNac=" + fechaNac + ", puedeVotar=" + puedeVotar + ", domicilio="
+				+ domicilio + '}';
+	}
+
 }
