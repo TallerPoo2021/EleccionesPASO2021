@@ -4,8 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Admin {
+	
 
-	public static void main(String[] args) {
+	public static List<ListaPolitica> generaListas() {
+		List<ListaPolitica> todasLasListasPoliticas = new ArrayList<>();
+		
+		
 //		CREACION DE SECCIONES
 
 //		CREACION DE DISTRITOS
@@ -54,5 +58,9 @@ public class Admin {
 				corrientes, frenteDeTodos);
 		listListasPoliticas.add(todos);
 
+		
+		todasLasListasPoliticas.add(compromisoFederal);
+		todasLasListasPoliticas.add(todos);
+		return todasLasListasPoliticas;
 	}
 }

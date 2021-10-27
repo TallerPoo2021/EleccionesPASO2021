@@ -3,16 +3,20 @@ package com.gruposeispoo.app;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.gruposeispoo.clases.Admin;
+import com.gruposeispoo.clases.ListaPolitica;
+
 public class Controlador {
 
-    private static List<ListaPoliticaPruebaBorrar> listaDePrueba;
+    private static List<ListaPolitica> listaDePrueba;
 
     /**
      * Constructor
      *
      */
     public Controlador() {
-        listaDePrueba = new ArrayList<>();
+//        listaDePrueba = new ArrayList<>();
+    	listaDePrueba = Admin.generaListas();
     }
 
     /**
