@@ -1,23 +1,74 @@
 package com.gruposeispoo.vistas.usuarios;
 
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import javax.swing.border.LineBorder;
 
 public class UserCorteBoletaPane extends javax.swing.JPanel {
 
+    /**
+     *
+     * ATRIBUTOS
+     *
+     */
+    private int numero = 0;
+
+    private List<String> nombres;
+
+    private boolean flagDiputados;
     private UserVotoCatePane contenedor;
     private boolean clicked = false;
 
     /**
-     * Constructor
+     * CONSTRUCTOR
+     *
+     */
+    public UserCorteBoletaPane() {
+        initComponents();
+        nombres = new ArrayList<>();
+        contenedor = null;
+        flagDiputados = false;
+    }
+
+    /**
+     * CONSTRUCTOR
      *
      * @param contenedor
+     * @param numero
+     * @param nombres
      */
-    public UserCorteBoletaPane(UserVotoCatePane contenedor) {
+    public UserCorteBoletaPane(UserVotoCatePane contenedor, int numero, List<String> nombres, boolean flag) {
+        this();
+        escribirNumeroYNombres(numero, nombres);
         this.contenedor = contenedor;
-        initComponents();
+        this.numero = numero;
+        this.nombres = nombres;
+        this.flagDiputados = flag;
+    }
+
+    public int getNumero() {
+        return numero;
+    }
+
+    public boolean isFlagDiputados() {
+        return flagDiputados;
+    }
+
+    private void escribirNumeroYNombres(int numero, List<String> nombres) {
+        String numeroLista = "Lista " + numero;
+        String candidato = "<html><p><center>";
+
+        for (String nombre : nombres) {
+            candidato += nombre + "<br>";
+        }
+
+        candidato += "</center></p></html>";
+        numeroListaTxt.setText("");
+        numeroListaTxt.setText(numeroLista);
+        candidatosTxt.setText("");
+        candidatosTxt.setText(candidato);
     }
 
     private void setCandidatoIcon(JLabel etiqueta, String rutaRelativaIcon) {
@@ -30,8 +81,8 @@ public class UserCorteBoletaPane extends javax.swing.JPanel {
 
         bgContainer = new javax.swing.JPanel();
         iconCandidato = new javax.swing.JLabel();
-        nombreCandidatoTxt = new javax.swing.JLabel();
-        tipoCandidatoTxt = new javax.swing.JLabel();
+        candidatosTxt = new javax.swing.JLabel();
+        numeroListaTxt = new javax.swing.JLabel();
 
         setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
@@ -52,18 +103,18 @@ public class UserCorteBoletaPane extends javax.swing.JPanel {
         iconCandidato.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         iconCandidato.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/gruposeispoo/vistas/images/personasgris.png"))); // NOI18N
 
-        nombreCandidatoTxt.setFont(new java.awt.Font("Roboto Medium", 1, 12)); // NOI18N
-        nombreCandidatoTxt.setForeground(new java.awt.Color(127, 127, 127));
-        nombreCandidatoTxt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        nombreCandidatoTxt.setText("<html><p><center>Nombre Apellido<br>Nombre Apellido<br>Nombre Apellido<br>Nombre Apellido<br>Nombre Apellido<br>Nombre Apellido</center></p></html>  \n");
-        nombreCandidatoTxt.setToolTipText("");
-        nombreCandidatoTxt.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        candidatosTxt.setFont(new java.awt.Font("Roboto Medium", 1, 12)); // NOI18N
+        candidatosTxt.setForeground(new java.awt.Color(127, 127, 127));
+        candidatosTxt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        candidatosTxt.setText("<html><p><center>Nombre Apellido<br>Nombre Apellido<br>Nombre Apellido<br>Nombre Apellido<br>Nombre Apellido<br>Nombre Apellido</center></p></html>  \n");
+        candidatosTxt.setToolTipText("");
+        candidatosTxt.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
-        tipoCandidatoTxt.setBackground(new java.awt.Color(255, 255, 255));
-        tipoCandidatoTxt.setFont(new java.awt.Font("Roboto Medium", 1, 14)); // NOI18N
-        tipoCandidatoTxt.setForeground(new java.awt.Color(127, 127, 127));
-        tipoCandidatoTxt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        tipoCandidatoTxt.setText("Lista<NumeroLista>");
+        numeroListaTxt.setBackground(new java.awt.Color(255, 255, 255));
+        numeroListaTxt.setFont(new java.awt.Font("Roboto Medium", 1, 14)); // NOI18N
+        numeroListaTxt.setForeground(new java.awt.Color(127, 127, 127));
+        numeroListaTxt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        numeroListaTxt.setText("Lista<NumeroLista>");
 
         javax.swing.GroupLayout bgContainerLayout = new javax.swing.GroupLayout(bgContainer);
         bgContainer.setLayout(bgContainerLayout);
@@ -72,16 +123,16 @@ public class UserCorteBoletaPane extends javax.swing.JPanel {
             .addGroup(bgContainerLayout.createSequentialGroup()
                 .addGroup(bgContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(iconCandidato, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
-                    .addComponent(nombreCandidatoTxt, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(tipoCandidatoTxt, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(candidatosTxt, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(numeroListaTxt, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         bgContainerLayout.setVerticalGroup(
             bgContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(bgContainerLayout.createSequentialGroup()
-                .addComponent(tipoCandidatoTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(numeroListaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(nombreCandidatoTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE)
+                .addComponent(candidatosTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(iconCandidato, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -100,8 +151,8 @@ public class UserCorteBoletaPane extends javax.swing.JPanel {
 
     private void bgContainerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bgContainerMouseClicked
         setCandidatoIcon(iconCandidato, "/com/gruposeispoo/vistas/images/personasceleste.png");
-        nombreCandidatoTxt.setForeground(new Color(43,179,205));
-        tipoCandidatoTxt.setForeground(new Color(43,179,205));
+        candidatosTxt.setForeground(new Color(43, 179, 205));
+        numeroListaTxt.setForeground(new Color(43, 179, 205));
     }//GEN-LAST:event_bgContainerMouseClicked
 
     private void bgContainerMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bgContainerMouseEntered
@@ -115,8 +166,8 @@ public class UserCorteBoletaPane extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bgContainer;
+    private javax.swing.JLabel candidatosTxt;
     private javax.swing.JLabel iconCandidato;
-    private javax.swing.JLabel nombreCandidatoTxt;
-    private javax.swing.JLabel tipoCandidatoTxt;
+    private javax.swing.JLabel numeroListaTxt;
     // End of variables declaration//GEN-END:variables
 }

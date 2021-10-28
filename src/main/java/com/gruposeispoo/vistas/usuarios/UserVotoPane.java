@@ -7,13 +7,19 @@ import javax.swing.JPanel;
 public class UserVotoPane extends javax.swing.JPanel {
 
     private UserVotoListaPane userVotoListaPane;
-    private UserVotoCatePane pruebaVotoCatePane = new UserVotoCatePane();
+    private UserVotoCatePane pruebaVotoCatePane;
     private Index contenedor;
     
+    /**
+     * CONSTRUCTOR
+     * 
+     * @param contenedor 
+     */
     public UserVotoPane(Index contenedor) {
         initComponents();
-        userVotoListaPane = new UserVotoListaPane();
         this.contenedor = contenedor;
+        userVotoListaPane = new UserVotoListaPane(this.contenedor);
+        pruebaVotoCatePane = new UserVotoCatePane(this.contenedor);
     }
 
     /**

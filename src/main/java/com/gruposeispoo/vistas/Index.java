@@ -1,7 +1,5 @@
 package com.gruposeispoo.vistas;
 
-
-
 import com.gruposeispoo.app.Controlador;
 import com.gruposeispoo.vistas.admin.AdminLoginPane;
 import com.gruposeispoo.vistas.usuarios.UserLoginPane;
@@ -17,9 +15,9 @@ import org.netbeans.lib.awtextra.AbsoluteConstraints;
 
 public class Index extends javax.swing.JFrame {
 
-    private AdminLoginPane adminLoginPane = new AdminLoginPane(this);
-    private IndexPane indexPane = new IndexPane(this);
-    private UserLoginPane userLoginPane = new UserLoginPane(this);
+    private IndexPane indexPane;
+    private AdminLoginPane adminLoginPane;
+    private UserLoginPane userLoginPane;
     public static Controlador controlador = new Controlador();
 
     /**
@@ -29,9 +27,22 @@ public class Index extends javax.swing.JFrame {
      */
     public Index() {
         initComponents();
+        indexPane = new IndexPane(this);
+        adminLoginPane = new AdminLoginPane(this);
+        userLoginPane = new UserLoginPane(this);
         init();
     }
-
+    
+    /**
+     * Genera una nueva instancia de votación. Esto significa un nuevo elector realizando el voto.
+     * 
+     * @param userLoginPane 
+     */
+    public void generarNuevaInstanciaDeVotacion(){
+        this.userLoginPane = new UserLoginPane(this);
+        actualizarContentPane(this.userLoginPane);
+    }
+    
     /**
      *
      * @param nuevoContenedor

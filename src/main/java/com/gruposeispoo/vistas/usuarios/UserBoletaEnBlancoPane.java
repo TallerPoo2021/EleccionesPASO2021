@@ -7,17 +7,37 @@ import javax.swing.border.LineBorder;
 
 public class UserBoletaEnBlancoPane extends javax.swing.JPanel {
 
-    private UserVotoListaPane contenedor;
+    private UserVotoListaPane contenedorLista;
+    private UserVotoCatePane contenedorCategoria;
     private boolean clicked = false;
 
     /**
-     * Constructor
+     * CONSTRUCTOR
+     *
+     */
+    public UserBoletaEnBlancoPane() {
+        initComponents();
+    }
+
+    /**
+     * CONSTRUCTOR
+     *
+     * @param contenedor
+     */
+    public UserBoletaEnBlancoPane(UserVotoCatePane contenedor) {
+        this();
+        this.contenedorCategoria = contenedor;
+
+    }
+
+    /**
+     * CONSTRUCTOR
      *
      * @param contenedor
      */
     public UserBoletaEnBlancoPane(UserVotoListaPane contenedor) {
-        this.contenedor = contenedor;
-        initComponents();
+        this();
+        this.contenedorLista = contenedor;
     }
 
     private void setBoletaIcon(JLabel etiqueta, String rutaRelativaIcon) {
@@ -88,7 +108,11 @@ public class UserBoletaEnBlancoPane extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void bgContainerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bgContainerMouseClicked
-        contenedor.selectedListaPanel(this);
+        if (contenedorLista != null) {
+            contenedorLista.selectedListaPanel(this);
+            return;
+        }
+        
     }//GEN-LAST:event_bgContainerMouseClicked
 
     private void bgContainerMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bgContainerMouseEntered

@@ -1,5 +1,6 @@
 package com.gruposeispoo.vistas.usuarios;
 
+import com.gruposeispoo.app.Controlador;
 import com.gruposeispoo.vistas.Index;
 import java.awt.Color;
 import java.util.Random;
@@ -14,6 +15,11 @@ public class UserLoginPane extends javax.swing.JPanel {
     private UserVotoPane userVotoPane;
     private Index contenedor;
 
+    /**
+     * CONSTRUCTOR
+     *
+     * @param contenedor
+     */
     public UserLoginPane(Index contenedor) {
         initComponents();
         this.contenedor = contenedor;
@@ -359,14 +365,17 @@ public class UserLoginPane extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void fingerprintIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_fingerprintIconMouseClicked
-        Random objetoRandomParaMolestar = new Random();
-        Integer enteroRand = objetoRandomParaMolestar.nextInt(2);
+        Random electorIdRandom = new Random();
+        Integer enteroRand = electorIdRandom.nextInt(2);
 
         if (InputFingerprintChecker.isVisible()) {
             InputFingerprintChecker.setVisible(false);
         }
 
-        if (enteroRand == 0) {
+        enteroRand += 10;
+
+        if (Controlador.existeElector(enteroRand)) {
+            Controlador.setIdVotante(enteroRand);
             /*
             SETEO DEL INPUT CHECKER - PASO 1
              */
@@ -419,11 +428,13 @@ public class UserLoginPane extends javax.swing.JPanel {
                     new Color(254, 220, 224), //ColorFondo
                     new Color(132, 26, 33), //ColorLetra
                     "Intente nuevamente");  //Mensaje
+
+            return;
         }
-        
-        if(enteroRand == 0){
-            contenedor.actualizarContentPane(userVotoPane);
-        }
+
+        contenedor.setBotoneraEnabled(false);
+        contenedor.actualizarContentPane(userVotoPane);
+
     }//GEN-LAST:event_fingerprintIconMouseClicked
 
     private void headerBarContainerMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_headerBarContainerMouseDragged

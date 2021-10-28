@@ -1,5 +1,6 @@
 package com.gruposeispoo.clases;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -14,6 +15,20 @@ public class ListaPolitica {
 
     /**
      * CONSTRUCTOR
+     * 
+     */
+    public ListaPolitica() {
+        nombre = "";
+        numero = 0;
+        diputados = new ArrayList<>();
+        senadores = new ArrayList<>();
+        distrito = null;
+        partidoPolitico = null;
+    }
+
+    
+    /**
+     * CONSTRUCTOR
      *
      *
      * @param nombre
@@ -25,6 +40,7 @@ public class ListaPolitica {
      */
     public ListaPolitica(String nombre, int numero, List<Candidato> diputados,
             List<Candidato> senadores, Distrito distrito, PartidoPolitico partidoPolitico) {
+        this();
         
         if (nombre == null || nombre.isBlank() || nombre.isEmpty()) {
             throw new IllegalArgumentException("Nombre Ingresado No Valido");
@@ -42,7 +58,7 @@ public class ListaPolitica {
         return nombre;
     }
 
-    protected void setNombre(String nombre) {
+    public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
@@ -50,39 +66,39 @@ public class ListaPolitica {
         return numero;
     }
 
-    protected void setNumero(int numero) {
+    public void setNumero(int numero) {
         this.numero = numero;
     }
 
-    protected List<Candidato> getDiputados() {
+    public List<Candidato> getDiputados() {
         return diputados;
     }
 
-    protected void setDiputados(List<Candidato> diputados) {
+    public void setDiputados(List<Candidato> diputados) {
         this.diputados = diputados;
     }
 
-    protected List<Candidato> getSenadores() {
+    public List<Candidato> getSenadores() {
         return senadores;
     }
 
-    protected void setSenadores(List<Candidato> senadores) {
+    public void setSenadores(List<Candidato> senadores) {
         this.senadores = senadores;
     }
 
-    protected Distrito getDistrito() {
+    public Distrito getDistrito() {
         return distrito;
     }
 
-    protected void setDistrito(Distrito distrito) {
+    public void setDistrito(Distrito distrito) {
         this.distrito = distrito;
     }
 
-    protected PartidoPolitico getPartidoPolitico() {
+    public PartidoPolitico getPartidoPolitico() {
         return partidoPolitico;
     }
 
-    protected void setPartidoPolitico(PartidoPolitico partidoPolitico) {
+    public void setPartidoPolitico(PartidoPolitico partidoPolitico) {
         this.partidoPolitico = partidoPolitico;
     }
 

@@ -10,6 +10,9 @@ public class MesaElectoral {
     private List<Elector> padron;
     private Circuito circuito;
 
+    public MesaElectoral() {
+    }
+    
     public MesaElectoral(Elector presidente, Elector suplentePresidente, String establecimiento, int numero, List<Elector> padron, Circuito circuito) throws Exception {
         if (presidente.equals(suplentePresidente)) throw new Exception("El presidente y el suplente no pueden ser la misma persona.");
         this.presidente = presidente;

@@ -10,62 +10,109 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LeerArchivos {
-	private File archivo;
-	private FileReader fr;
-	private String[] fila;
-	private CSVReader csvRead;
 
-	/**
-	 * Comprueba que el archivo no este vacio
-	 *
-	 * @param archivo, ruta del archivo a comprobar
-	 * @return boolean, true si esta vacio el archivo
-	 *
-	 */
-	private boolean archivoVacio(File archivo) {
-		return archivo.length() == 0;
-	}
+    private File archivo;
+    private FileReader fr;
+    private String[] fila;
+    private CSVReader csvRead;
 
-	/**
-	 * Carga de padron
-	 *
-	 * @param rutaArchivoElectores, ruta de Padron.csv
-	 * @return List<Elector>, lista de electores
-	 *
-	 */
-	public List<Elector> cargaElectores(String rutaArchivoElectores) {
-		List<Elector> listaElectores = new ArrayList<Elector>();
-		int idAutoIncrement = 0;
-		try {
-			archivo = new File(rutaArchivoElectores);
-			if (this.archivoVacio(archivo)) {
-				throw new Error("El archivo" + rutaArchivoElectores + " esta vacio");
-			}
+    /**
+     * CONSTRUCTOR
+     *
+     */
+    public LeerArchivos() {
+    }
 
-			fr = new FileReader(archivo);
-			csvRead = new CSVReader(fr);
-			fila = null;
-			while ((fila = csvRead.readNext()) != null) {
+    /**
+     * Comprueba que el archivo no este vacio
+     *
+     * @param archivo, ruta del archivo a comprobar
+     * @return boolean, true si esta vacio el archivo
+     *
+     */
+    private boolean archivoVacio(File archivo) {
+        return archivo.length() == 0;
+    }
 
-				int anioNacimiento = Integer.parseInt(fila[2]);
-				int mesNacimiento = Integer.parseInt(fila[3]);
-				int diaNacimiento = Integer.parseInt(fila[4]);
-				idAutoIncrement++;
-				Elector electorAux = new Elector(fila[0], fila[1],
-						LocalDate.of(anioNacimiento, mesNacimiento, diaNacimiento),
-						TipoDocumento.valueOf(fila[5]),
-						new Domicilio(fila[6], fila[7], fila[8], fila[9]),
-						Integer.parseInt(fila[10]),
-						CamaraElectoral.encontrarMesa(Integer.parseInt(fila[11])), idAutoIncrement);
+    /**
+     * Carga de padron
+     *
+     * @param rutaArchivoElectores, ruta de Padron.csv
+     * @return List<>, lista de electores
+     *
+     */
+    public List<Elector> leerPadronElectores(String rutaArchivoElectores) {
+        List<Elector> listaElectores = new ArrayList<Elector>();
+ 
+        String nombre = "";
+        String apellido = "";
+        LocalDate fechaNac = null;
+        TipoDocumento tipoDni = null;
+        Domicilio domicilio = null;
+        int anioNacimiento = 0;
+        int mesNacimiento = 0;
+        int diaNacimiento = 0;
 
-				listaElectores.add(electorAux);
-			}
+        try {
+            archivo = new File(rutaArchivoElectores);
 
-			csvRead.close();
-		} catch (IOException | CsvValidationException e) {
-			System.out.println(e);
-		}
+            if (this.archivoVacio(archivo)) {
+                throw new Error("El archivo" + rutaArchivoElectores + " esta vacio");
+            }
 
-		return listaElectores;
-	}
+            fr = new FileReader(archivo);
+            csvRead = new CSVReader(fr);
+            fila = null;
+            
+            while ((fila = csvRead.readNext()) != null) {
+
+                /*
+                    Los datos de la fecha de nacimiento del elector
+                */
+                anioNacimiento = Integer.parseInt(fila[2]);
+                mesNacimiento = Integer.parseInt(fila[3]);
+                diaNacimiento = Integer.parseInt(fila[4]);
+                
+                // tipo dni del elector
+                tipoDni = TipoDocumento.valueOf(fila[5]);
+                /*
+                    Los datos del domicilio del elector
+                */
+                domicilio = new Domicilio();
+                domicilio.setDireccion(fila[6]);
+                domicilio.setLocalidad(fila[7]);
+                domicilio.setDepartamento(fila[8]);
+                domicilio.setProvincia(fila[9]);
+                // nombre del elector
+                nombre = fila[0];
+                // apellido del elector
+                apellido = fila[1];
+                // fecha de nacimiento del elector
+                fechaNac = LocalDate.of(anioNacimiento, mesNacimiento, diaNacimiento);
+                
+                /*
+                    Creando un nuevo elector
+                */
+                Elector electorAux = new Elector();
+
+                /*
+                    Seteando los datos del nuevo elector
+                */
+                electorAux.setNombre(nombre);
+                electorAux.setApellido(apellido);
+                electorAux.setFechaNac(fechaNac);
+                electorAux.setTipoDni(tipoDni);
+                electorAux.setDomicilio(domicilio);
+                
+                //elector agregado a la lista de electores
+                listaElectores.add(electorAux);
+            }
+
+            csvRead.close();
+        } catch (IOException | CsvValidationException e) {
+            System.out.println(e);
+        }
+
+        return listaElectores;
+    }
 }

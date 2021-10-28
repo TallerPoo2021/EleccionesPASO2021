@@ -1,39 +1,134 @@
 package com.gruposeispoo.vistas.usuarios;
 
+import com.gruposeispoo.app.Controlador;
+import com.gruposeispoo.clases.ListaPolitica;
+import com.gruposeispoo.vistas.Index;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.Box;
 import javax.swing.JPanel;
 
 public class UserVotoCatePane extends javax.swing.JPanel {
 
+    private List<UserCorteBoletaPane> boletas = new ArrayList<>();
+    private Index contenedor;
+
     /**
      * Constructor
      *
      */
-    public UserVotoCatePane() {
+    public UserVotoCatePane(Index contenedor) {
         initComponents();
+        this.contenedor = contenedor;
         //separadorDeBoletaSuperior
         senadoresContainer.add(Box.createRigidArea(new Dimension(10, 10)));
         diputadosContainer.add(Box.createRigidArea(new Dimension(10, 10)));
-        agregarSenadores(5);
-        agregarDiputados(5);
+        //MostrarBoletasEnPantalla
+        mostrarBoletas();
+        //Comienzo con botones invisibles
+        btnVotarTxt.setVisible(false);
     }
 
-    //METODO DE PRUEBA
-    private void agregarSenadores(int cantidad) {
-        for (int i = 0; i < cantidad; i++) {
-            agregarSenador(new UserCorteBoletaPane(this));
+    /**
+     * Imprime todas las boletas en el contenedor
+     *
+     */
+    private void mostrarBoletas() {
+        setBoletas();
+        agregarBoletas(boletas);
+    }
+
+    /**
+     * Agrega las las boletas de listaBoletas al contenedor correspondiente
+     *
+     * @param listaBoletas, lista de boletas para mostrar
+     */
+    private void agregarBoletas(List<UserCorteBoletaPane> listaBoletas) {
+
+        listaBoletas.forEach(boleta -> {
+            agregarBoleta(boleta);
+        });
+
+    }
+
+    /**
+     * Agrega un panel hijo(boleta) a un panel padre(contenedor)
+     *
+     * @param boleta, boleta a mostrar
+     * @param contenedor, panel padre o contenedor de la boleta
+     */
+    private void agregarBoleta(JPanel boleta, JPanel contenedor) {
+        boleta.setAlignmentX(Component.CENTER_ALIGNMENT);
+        contenedor.add(boleta);
+    }
+
+    /**
+     * Agrega una única boleta al contenedor correspondiente
+     *
+     * @param boleta, boleta a mostrar
+     */
+    private void agregarBoleta(UserCorteBoletaPane boleta) {
+
+        if (boleta.isFlagDiputados()) {
+            agregarBoleta(boleta, diputadosContainer);
+            return;
+        }
+        agregarBoleta(boleta, senadoresContainer);
+    }
+
+    /**
+     * LLena la lista de boletas con las correspondientes representaciones
+     * gráficas de las listas politicas en listasPoliticas s
+     */
+    public void setBoletas() {
+        List<ListaPolitica> listasPoliticas = Controlador.getListasPolticas();
+        List<String> nombresDiputados = new ArrayList<>();
+        List<String> nombresSenadores = new ArrayList<>();
+
+        for (ListaPolitica listaPolitica : listasPoliticas) {
+
+            if (!(listaPolitica.getDiputados() == null)) {
+                listaPolitica.getDiputados().forEach(diputado -> {
+                    nombresDiputados.add(diputado.getNombre() + " " + diputado.getApellido());
+                });
+            }
+
+            if (!nombresDiputados.isEmpty()) {
+                UserCorteBoletaPane nuevaBoleta = (UserCorteBoletaPane) listaPoliticaACorteBoletaPane(listaPolitica.getNumero(), nombresDiputados, true);
+                boletas.add(nuevaBoleta);
+            }
+
+            if (!(listaPolitica.getSenadores() == null)) {
+                listaPolitica.getSenadores().forEach(senador -> {
+                    nombresSenadores.add(senador.getNombre() + " " + senador.getApellido());
+                });
+            }
+
+            if (!nombresSenadores.isEmpty()) {
+                UserCorteBoletaPane nuevaBoleta = (UserCorteBoletaPane) listaPoliticaACorteBoletaPane(listaPolitica.getNumero(), nombresSenadores, false);
+                boletas.add(nuevaBoleta);
+            }
+
         }
     }
 
-    //METODO DE PRUEBA
-    private void agregarDiputados(int cantidad) {
-        for (int i = 0; i < cantidad; i++) {
-            agregarDiputado(new UserCorteBoletaPane(this));
+    /**
+     * Crea una representación gráfica de una lista politica
+     *
+     * @param numero
+     * @param nombres
+     * @return
+     */
+    public JPanel listaPoliticaACorteBoletaPane(Integer numero, List<String> nombres, boolean flag) {
+
+        if (numero == null) {
+            return new UserBoletaEnBlancoPane(this);
         }
+
+        return new UserCorteBoletaPane(this, numero, nombres, flag);
     }
 
     private void actualizarPane(JPanel panel) {
@@ -86,6 +181,8 @@ public class UserVotoCatePane extends javax.swing.JPanel {
         botoneraContainer = new javax.swing.JPanel();
         btnVotarContainer = new javax.swing.JPanel();
         btnVotarTxt = new javax.swing.JLabel();
+        btnConfirmarContainer = new javax.swing.JPanel();
+        btnConfirmarTxt = new javax.swing.JLabel();
 
         bgContainer.setBackground(new java.awt.Color(245, 244, 246));
 
@@ -209,6 +306,9 @@ public class UserVotoCatePane extends javax.swing.JPanel {
         btnVotarTxt.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnVotarTxt.setOpaque(true);
         btnVotarTxt.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnVotarTxtMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnVotarTxtMouseEntered(evt);
             }
@@ -235,14 +335,43 @@ public class UserVotoCatePane extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, botoneraContainerLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnVotarContainer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34))
+                .addGap(36, 36, 36))
         );
         botoneraContainerLayout.setVerticalGroup(
             botoneraContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, botoneraContainerLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(botoneraContainerLayout.createSequentialGroup()
                 .addComponent(btnVotarContainer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(21, 21, 21))
+                .addGap(0, 12, Short.MAX_VALUE))
+        );
+
+        btnConfirmarTxt.setBackground(new java.awt.Color(43, 179, 205));
+        btnConfirmarTxt.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
+        btnConfirmarTxt.setForeground(new java.awt.Color(255, 255, 255));
+        btnConfirmarTxt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnConfirmarTxt.setText("CONFIRMAR");
+        btnConfirmarTxt.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnConfirmarTxt.setOpaque(true);
+        btnConfirmarTxt.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnConfirmarTxtMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnConfirmarTxtMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnConfirmarTxtMouseExited(evt);
+            }
+        });
+
+        javax.swing.GroupLayout btnConfirmarContainerLayout = new javax.swing.GroupLayout(btnConfirmarContainer);
+        btnConfirmarContainer.setLayout(btnConfirmarContainerLayout);
+        btnConfirmarContainerLayout.setHorizontalGroup(
+            btnConfirmarContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(btnConfirmarTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE)
+        );
+        btnConfirmarContainerLayout.setVerticalGroup(
+            btnConfirmarContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(btnConfirmarTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout bgContainerLayout = new javax.swing.GroupLayout(bgContainer);
@@ -250,31 +379,40 @@ public class UserVotoCatePane extends javax.swing.JPanel {
         bgContainerLayout.setHorizontalGroup(
             bgContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(headerContainer, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(bgContainerLayout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addGroup(bgContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1)
-                    .addComponent(diputadosTitleTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE))
-                .addGap(75, 75, 75)
-                .addGroup(bgContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2)
-                    .addComponent(senadoresTitleTxt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(36, 36, 36))
             .addComponent(botoneraContainer, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bgContainerLayout.createSequentialGroup()
+                .addGroup(bgContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(bgContainerLayout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnConfirmarContainer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(bgContainerLayout.createSequentialGroup()
+                        .addGap(33, 33, 33)
+                        .addGroup(bgContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane1)
+                            .addComponent(diputadosTitleTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE))
+                        .addGap(75, 75, 75)
+                        .addGroup(bgContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2)
+                            .addComponent(senadoresTitleTxt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addGap(36, 36, 36))
         );
         bgContainerLayout.setVerticalGroup(
             bgContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(bgContainerLayout.createSequentialGroup()
                 .addComponent(headerContainer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(bgContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(bgContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(diputadosTitleTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(senadoresTitleTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(bgContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(bgContainerLayout.createSequentialGroup()
-                        .addGroup(bgContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(diputadosTitleTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(senadoresTitleTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bgContainerLayout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnConfirmarContainer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
                 .addComponent(botoneraContainer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -312,17 +450,53 @@ public class UserVotoCatePane extends javax.swing.JPanel {
     }//GEN-LAST:event_btnExitTxtMouseExited
 
     private void btnVotarTxtMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVotarTxtMouseEntered
-        btnVotarTxt.setBackground(new Color(58,77,92));
+        btnVotarTxt.setBackground(new Color(58, 77, 92));
     }//GEN-LAST:event_btnVotarTxtMouseEntered
 
     private void btnVotarTxtMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVotarTxtMouseExited
-        btnVotarTxt.setBackground(new Color(43,179,205));
+        btnVotarTxt.setBackground(new Color(43, 179, 205));
     }//GEN-LAST:event_btnVotarTxtMouseExited
+
+    private void btnConfirmarTxtMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnConfirmarTxtMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnConfirmarTxtMouseEntered
+
+    private void btnConfirmarTxtMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnConfirmarTxtMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnConfirmarTxtMouseExited
+
+    private void btnConfirmarTxtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnConfirmarTxtMouseClicked
+        UserCorteBoletaPane boletaDiputadosVotada = null;
+        UserCorteBoletaPane boletaSenadoresVotada = null;
+
+        if (!(diputadosContainer.getComponent(0) == null)) {
+            boletaDiputadosVotada = (UserCorteBoletaPane) diputadosContainer.getComponent(0);
+            diputadosContainer.removeAll();
+            Controlador.setNumeroListaVotadaUno(boletaDiputadosVotada.getNumero());
+        }
+
+        if (!(senadoresContainer.getComponent(0) == null)) {
+            boletaSenadoresVotada = (UserCorteBoletaPane) senadoresContainer.getComponent(0);
+            senadoresContainer.removeAll();
+            Controlador.setNumeroListaVotadaDos(boletaDiputadosVotada.getNumero());
+        }
+
+        btnVotarTxt.setVisible(true);
+        btnConfirmarTxt.setVisible(false);
+    }//GEN-LAST:event_btnConfirmarTxtMouseClicked
+
+    private void btnVotarTxtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVotarTxtMouseClicked
+        Controlador.nuevoVoto();
+        contenedor.setBotoneraEnabled(true);
+        contenedor.generarNuevaInstanciaDeVotacion();
+    }//GEN-LAST:event_btnVotarTxtMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bgContainer;
     private javax.swing.JPanel botoneraContainer;
+    private javax.swing.JPanel btnConfirmarContainer;
+    private javax.swing.JLabel btnConfirmarTxt;
     private javax.swing.JPanel btnExitContainer;
     private javax.swing.JLabel btnExitTxt;
     private javax.swing.JPanel btnVotarContainer;

@@ -9,235 +9,166 @@ import java.time.LocalDate;
  */
 public class Elector {
 
-	private static int cantidadDeElectores = 0;
-	private int id;
-	private boolean puedeVotar;
-	private String nombre;
-	private String apellido;
-	private LocalDate fechaNac;
-	private TipoDocumento tipoDni;
-	private Domicilio domicilio;
-	private Voto voto;
-	private int dni;
-	private MesaElectoral mesaElectoral;
+    private static int cantidadDeElectores = 0;
+    private int id;
 
-	/**
-	 *
-	 * Constructor
-	 *
-	 * Por defecto, al crearse un elector, este no est� habilitado para votar
-	 *
-	 *
-	 */
-	public Elector() {
-		Elector.cantidadDeElectores++;
-		this.id = Elector.cantidadDeElectores;
-		this.puedeVotar = false;
-	}
+    private boolean puedeVotar;
+    private String nombre;
+    private String apellido;
+    private LocalDate fechaNac;
+    private TipoDocumento tipoDni;
+    private Domicilio domicilio;
+    private Voto voto;
+    private MesaElectoral mesaElectoral;
 
-	/**
-	 * Constructor parametrizado
-	 *
-	 * @param nombre,   nombre del elector
-	 * @param apellido, apellido del elector
-	 * @param fechaNac, fecha de nacimiento del elector
-	 */
-	public Elector(String nombre, String apellido, LocalDate fechaNac) {
-		this();
-		this.nombre = nombre;
-		this.apellido = apellido;
-		this.fechaNac = fechaNac;
-	}
+    /**
+     *
+     * Constructor
+     *
+     * Por defecto, al crearse un elector, este no esta habilitado para votar
+     *
+     *
+     */
+    public Elector() {
+        Elector.cantidadDeElectores++;
+        this.id = Elector.cantidadDeElectores;
+        this.puedeVotar = false;
+    }
 
-	/**
-	 *
-	 * Constructor parametrizado
-	 *
-	 * @param nombre,    nombre del elector
-	 * @param apellido,  apellido del elector
-	 * @param DNI,       DNI de TipoDocumento
-	 * @param fechaNac,  fecha de nacimiento del elector
-	 * @param domicilio, domicilio del elector
-	 */
-	public Elector(String nombre, String apellido, TipoDocumento DNI, LocalDate fechaNac,
-			Domicilio domicilio) {
-		this();
-		this.nombre = nombre;
-		this.apellido = apellido;
-		this.tipoDni = DNI;
-		this.fechaNac = fechaNac;
-		this.domicilio = domicilio;
-	}
+    /**
+     * Constructor parametrizado
+     *
+     * @param nombre, nombre del elector
+     * @param apellido, apellido del elector
+     * @param fechaNac, fecha de nacimiento del elector
+     */
+    public Elector(String nombre, String apellido, LocalDate fechaNac) {
+        this();
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.fechaNac = fechaNac;
+    }
 
-	/**
-	 *
-	 * Constructor parametrizado (usado para cargar padron)
-	 *
-	 * @param nombre,    nombre del elector
-	 * @param apellido,  apellido del elector
-	 * @param fechaNac,  fecha de nacimiento del elector
-	 * @param tipoDni,   DNI de TipoDocumento
-	 * @param domicilio, domicilio del elector
-	 * @param dni,       dni del elector
-	 * @param id,        id autoincremental del usuario
-	 */
-	public Elector(String nombre, String apellido, LocalDate fechaNac, TipoDocumento tipoDni,
-			Domicilio domicilio, int dni, MesaElectoral mesaElectoral, int id) {
-		if (tipoDni == null) {
-			throw new NullPointerException("Falta setear el atributo DNI");
-		}
-		this.puedeVotar = tipoDni != TipoDocumento.DNI_EN_CELULAR
-				&& tipoDni != TipoDocumento.DNI_EN_TRAMITE;;
-		this.nombre = nombre;
-		this.apellido = apellido;
-		this.fechaNac = fechaNac;
-		this.tipoDni = tipoDni;
-		this.domicilio = domicilio;
-		this.dni = dni;
-		this.mesaElectoral = mesaElectoral;
-		this.id = id;
-	}
+    /**
+     * Constructor parametrizado
+     *
+     * @param nombre
+     * @param apellido
+     * @param fechaNac
+     * @param DNI
+     * @param domicilio
+     */
+    public Elector(String nombre, String apellido, LocalDate fechaNac, TipoDocumento DNI,
+            Domicilio domicilio) {
+        this(nombre, apellido, fechaNac);
+        this.setTipoDni(DNI);
+        this.domicilio = domicilio;
+    }
 
-	public static int getCantidadDeElectores() {
-		return cantidadDeElectores;
-	}
+    public static int getCantidadDeElectores() {
+        return cantidadDeElectores;
+    }
 
-	/**
-	 *
-	 * @return int, el identificador �nico de este elector
-	 */
-	public int getId() {
-		return id;
-	}
+    public int getId() {
+        return id;
+    }
 
-	/**
-	 * @return boolean, true si el elector esta habilitado para votar, false en caso
-	 *         contrario.
-	 */
-	public boolean getPuedeVotar() {
-		return puedeVotar && voto == null;
-	}
+    public boolean isPuedeVotar() {
+        return puedeVotar;
+    }
 
-	/**
-	 *
-	 * @return Voto, el voto realizado por este elector, NULL si este elector no ha
-	 *         votado a�n
-	 */
-	public Voto getVoto() {
-		return voto;
-	}
+    public void setPuedeVotar(boolean puedeVotar) {
+        this.puedeVotar = puedeVotar;
+    }
 
-	/**
-	 * @param voto, el voto a setear
-	 */
-	public void setVoto(Voto voto) {
-		this.voto = voto;
-	}
+    public String getNombre() {
+        return nombre;
+    }
 
-	/**
-	 *
-	 * @return String, el nombre de este elector
-	 */
-	public String getNombre() {
-		return nombre;
-	}
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
 
-	/**
-	 *
-	 * @param nombre, el nombre a setear
-	 */
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
+    public String getApellido() {
+        return apellido;
+    }
 
-	/**
-	 *
-	 * @return String, el apellido de este elector
-	 */
-	public String getApellido() {
-		return apellido;
-	}
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
 
-	/**
-	 *
-	 * @param apellido, el apellido a setear
-	 */
-	public void setApellido(String apellido) {
-		this.apellido = apellido;
-	}
+    public LocalDate getFechaNac() {
+        return fechaNac;
+    }
 
-	/**
-	 *
-	 * @return TipoDocumento, el tipo de documento de este elector
-	 */
-	public TipoDocumento getDNI() {
-		return tipoDni;
-	}
+    public void setFechaNac(LocalDate fechaNac) {
+        this.fechaNac = fechaNac;
+    }
 
-	/**
-	 *
-	 * @param DNI, el tipo de dni a setear
-	 */
-	public void setDNI(TipoDocumento DNI) {
-		this.tipoDni = DNI;
-	}
+    public TipoDocumento getTipoDni() {
+        return tipoDni;
+    }
 
-	/**
-	 *
-	 * @return Date, la fecha de nacimiento de este elector
-	 */
-	public LocalDate getFechaNac() {
-		return fechaNac;
-	}
+    public void setTipoDni(TipoDocumento tipoDni) {
+        if (tipoDni == null) {
+            throw new NullPointerException("Tipo de documento invalido");
+        }
+        puedeVotar = tipoDni != TipoDocumento.DNI_EN_CELULAR && tipoDni != TipoDocumento.DNI_EN_TRAMITE;
+        this.tipoDni = tipoDni;
+    }
 
-	/**
-	 *
-	 * @param fechaNac, la fecha de nacimiento a setear
-	 */
-	public void setFechaNac(LocalDate fechaNac) {
-		this.fechaNac = fechaNac;
-	}
+    public Domicilio getDomicilio() {
+        return domicilio;
+    }
 
-	/**
-	 *
-	 * @return Domicilio, el domicilio de este elector
-	 */
-	public Domicilio getDomicilio() {
-		return domicilio;
-	}
+    public void setDomicilio(Domicilio domicilio) {
+        this.domicilio = domicilio;
+    }
 
-	/**
-	 *
-	 * @param domicilio, el domicilio a setear
-	 */
-	public void setDomicilio(Domicilio domicilio) {
-		this.domicilio = domicilio;
-	}
+    public Voto getVoto() {
+        return voto;
+    }
 
-	/**
-	 *
-	 * @return dni, dni del votante
-	 */
-	public int getDni() {
-		return dni;
-	}
+    public void setVoto(Voto voto) {
+        this.voto = voto;
+    }
 
-	/**
-	 *
-	 * @param dni, dni del votante
-	 */
-	public void setDni(int dni) {
-		this.dni = dni;
-	}
+    public MesaElectoral getMesaElectoral() {
+        return mesaElectoral;
+    }
 
-	@Override
-	public String toString() {
-		return "Elector{" + "nombre=" + nombre + ", apellido=" + apellido + ", DNI=" + tipoDni
-				+ ", fechaNac=" + fechaNac + ", puedeVotar=" + puedeVotar + ", domicilio="
-				+ domicilio + '}';
-	}
+    public void setMesaElectoral(MesaElectoral mesaElectoral) {
+        this.mesaElectoral = mesaElectoral;
+    }
 
-	public MesaElectoral getMesaElectoral() {
-		return mesaElectoral;
-	}
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 89 * hash + this.id;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Elector other = (Elector) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Elector{" + "id=" + id + ", puedeVotar=" + puedeVotar + ", nombre=" + nombre + ", apellido=" + apellido + ", fechaNac=" + fechaNac + ", tipoDni=" + tipoDni + ", domicilio=" + domicilio + ", voto=" + voto + ", mesaElectoral=" + mesaElectoral + '}';
+    }
+
 }

@@ -12,8 +12,8 @@ public class UserBoletaPane extends javax.swing.JPanel {
      * ATRIBUTOS
      *
      */
-    private int numero;
-    private String nombre;
+    private int numero = 0;
+    private String nombre = "";
     private UserVotoListaPane contenedor;
     private boolean clicked = false;
     /**
@@ -145,8 +145,16 @@ public class UserBoletaPane extends javax.swing.JPanel {
         this.numero = numero;
     }
 
+    public int getNumero() {
+        return this.numero;
+    }
+
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+    
+    public String getNombre() {
+        return this.nombre;
     }
 
     private void setBackgroundColorBorder(Color colorBG) {

@@ -56,8 +56,8 @@
               <Group type="102" alignment="0" attributes="0">
                   <Group type="103" groupAlignment="1" max="-2" attributes="0">
                       <Component id="iconCandidato" alignment="0" pref="165" max="32767" attributes="0"/>
-                      <Component id="nombreCandidatoTxt" alignment="0" max="32767" attributes="0"/>
-                      <Component id="tipoCandidatoTxt" alignment="0" max="32767" attributes="0"/>
+                      <Component id="candidatosTxt" alignment="0" max="32767" attributes="0"/>
+                      <Component id="numeroListaTxt" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
               </Group>
@@ -66,9 +66,9 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <Component id="tipoCandidatoTxt" min="-2" pref="23" max="-2" attributes="0"/>
+                  <Component id="numeroListaTxt" min="-2" pref="23" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="nombreCandidatoTxt" pref="116" max="32767" attributes="0"/>
+                  <Component id="candidatosTxt" pref="116" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="iconCandidato" min="-2" pref="114" max="-2" attributes="0"/>
               </Group>
@@ -84,7 +84,7 @@
             </Property>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="nombreCandidatoTxt">
+        <Component class="javax.swing.JLabel" name="candidatosTxt">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Roboto Medium" size="12" style="1"/>
@@ -98,7 +98,7 @@
             <Property name="verticalAlignment" type="int" value="1"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="tipoCandidatoTxt">
+        <Component class="javax.swing.JLabel" name="numeroListaTxt">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>

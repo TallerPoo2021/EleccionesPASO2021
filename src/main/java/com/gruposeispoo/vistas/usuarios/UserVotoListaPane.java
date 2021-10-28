@@ -1,6 +1,6 @@
 package com.gruposeispoo.vistas.usuarios;
 
-
+import com.gruposeispoo.app.Controlador;
 import com.gruposeispoo.clases.ListaPolitica;
 import com.gruposeispoo.vistas.Index;
 import java.awt.Color;
@@ -12,7 +12,6 @@ import java.util.Random;
 import javax.swing.Box;
 import javax.swing.JPanel;
 
-
 public class UserVotoListaPane extends javax.swing.JPanel {
 
     /**
@@ -22,13 +21,15 @@ public class UserVotoListaPane extends javax.swing.JPanel {
     private JPanel listaSeleccionada = null;
     private List<UserBoletaPane> boletas = new ArrayList<>();
     private boolean selectedListaTieneUnaLista = false;
+    private Index contenedor;
 
     /**
      * CONSTRUCTOR
      *
      */
-    public UserVotoListaPane() {
+    public UserVotoListaPane(Index contenedor) {
         initComponents();
+        this.contenedor = contenedor;
         //separadorDeBoletaSuperior
         listasContainer.add(Box.createRigidArea(new Dimension(10, 10)));
         //MostrarBoletasEnPantalla
@@ -51,10 +52,9 @@ public class UserVotoListaPane extends javax.swing.JPanel {
      * LLena la lista de boletas con las correspondientes representaciones
      * gráficas de las listas politicas en listasPoliticas
      *
-     * @param listasPoliticas, lista de listas politicas correspondientes
      */
     public void setBoletas() {
-        List<ListaPolitica> listasPoliticas = Index.controlador.getListasPolticas();
+        List<ListaPolitica> listasPoliticas = Controlador.getListasPolticas();
 
         for (ListaPolitica listaPolitica : listasPoliticas) {
             UserBoletaPane nuevaBoleta = (UserBoletaPane) listaPoliticaABoletaPane(listaPolitica.getNumero(), listaPolitica.getNombre());
@@ -345,6 +345,9 @@ public class UserVotoListaPane extends javax.swing.JPanel {
         btnVotarTxt.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnVotarTxt.setOpaque(true);
         btnVotarTxt.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnVotarTxtMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnVotarTxtMouseEntered(evt);
             }
@@ -525,6 +528,14 @@ public class UserVotoListaPane extends javax.swing.JPanel {
         btnVotarTxt.setVisible(true);
         btnConfirmarTxt.setVisible(false);
     }//GEN-LAST:event_btnConfirmarTxtMouseClicked
+
+    private void btnVotarTxtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVotarTxtMouseClicked
+        UserBoletaPane boletaVotada = (UserBoletaPane) listaSelectedContainer.getComponent(0);
+        Controlador.setNumeroListaVotadaUno(boletaVotada.getNumero());
+        Controlador.nuevoVoto();
+        contenedor.setBotoneraEnabled(true);
+        contenedor.generarNuevaInstanciaDeVotacion();
+    }//GEN-LAST:event_btnVotarTxtMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

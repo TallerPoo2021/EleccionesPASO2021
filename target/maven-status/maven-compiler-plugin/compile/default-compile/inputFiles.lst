@@ -1,3 +1,4 @@
+C:\Users\yusri\Documents\Maven\maven-projects\EleccionesPaso2021\src\main\java\com\gruposeispoo\clases\Admin.java
 C:\Users\yusri\Documents\Maven\maven-projects\EleccionesPaso2021\src\main\java\com\gruposeispoo\app\App.java
 C:\Users\yusri\Documents\Maven\maven-projects\EleccionesPaso2021\src\main\java\com\gruposeispoo\app\Controlador.java
 C:\Users\yusri\Documents\Maven\maven-projects\EleccionesPaso2021\src\main\java\com\gruposeispoo\clases\CamaraElectoral.java
@@ -18,6 +19,7 @@ C:\Users\yusri\Documents\Maven\maven-projects\EleccionesPaso2021\src\main\java\c
 C:\Users\yusri\Documents\Maven\maven-projects\EleccionesPaso2021\src\main\java\com\gruposeispoo\vistas\usuarios\UserBoletaEnBlancoPane.java
 C:\Users\yusri\Documents\Maven\maven-projects\EleccionesPaso2021\src\main\java\com\gruposeispoo\clases\Circuito.java
 C:\Users\yusri\Documents\Maven\maven-projects\EleccionesPaso2021\src\main\java\com\gruposeispoo\clases\PartidoPolitico.java
+C:\Users\yusri\Documents\Maven\maven-projects\EleccionesPaso2021\src\main\java\com\gruposeispoo\clases\AMainPrueba.java
 C:\Users\yusri\Documents\Maven\maven-projects\EleccionesPaso2021\src\main\java\com\gruposeispoo\clases\IContadorVoto.java
 C:\Users\yusri\Documents\Maven\maven-projects\EleccionesPaso2021\src\main\java\com\gruposeispoo\vistas\Index.java
 C:\Users\yusri\Documents\Maven\maven-projects\EleccionesPaso2021\src\main\java\com\gruposeispoo\clases\Elector.java
@@ -25,6 +27,6 @@ C:\Users\yusri\Documents\Maven\maven-projects\EleccionesPaso2021\src\main\java\c
 C:\Users\yusri\Documents\Maven\maven-projects\EleccionesPaso2021\src\main\java\com\gruposeispoo\clases\ListaPolitica.java
 C:\Users\yusri\Documents\Maven\maven-projects\EleccionesPaso2021\src\main\java\com\gruposeispoo\clases\PadronElectoral.java
 C:\Users\yusri\Documents\Maven\maven-projects\EleccionesPaso2021\src\main\java\com\gruposeispoo\vistas\usuarios\UserVotoPane.java
-C:\Users\yusri\Documents\Maven\maven-projects\EleccionesPaso2021\src\main\java\com\gruposeispoo\app\ListaPoliticaPruebaBorrar.java
+C:\Users\yusri\Documents\Maven\maven-projects\EleccionesPaso2021\src\main\java\com\gruposeispoo\vistas\usuarios\UserBienvenidaPane.java
 C:\Users\yusri\Documents\Maven\maven-projects\EleccionesPaso2021\src\main\java\com\gruposeispoo\clases\Distrito.java
 C:\Users\yusri\Documents\Maven\maven-projects\EleccionesPaso2021\src\main\java\com\gruposeispoo\clases\LeerArchivos.java
