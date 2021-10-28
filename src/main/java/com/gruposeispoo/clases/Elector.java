@@ -83,6 +83,11 @@ public class Elector {
 	 */
 	public Elector(String nombre, String apellido, LocalDate fechaNac, TipoDocumento tipoDni,
 			Domicilio domicilio, int dni, MesaElectoral mesaElectoral, int id) {
+		if (tipoDni == null) {
+			throw new NullPointerException("Falta setear el atributo DNI");
+		}
+		this.puedeVotar = tipoDni != TipoDocumento.DNI_EN_CELULAR
+				&& tipoDni != TipoDocumento.DNI_EN_TRAMITE;;
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.fechaNac = fechaNac;
@@ -106,27 +111,11 @@ public class Elector {
 	}
 
 	/**
-	 *
-	 * Establece si esta elector esta habilitado para votar o no, dependiendo de su
-	 * tipo de documento.
-	 *
-	 */
-	public void setHabilitadoParaVotar() {
-		if (this.tipoDni == null) {
-			throw new NullPointerException("Falta setear el atributo DNI");
-		}
-
-		boolean habilitado = this.tipoDni != TipoDocumento.DNI_EN_CELULAR
-				&& this.tipoDni != TipoDocumento.DNI_EN_TRAMITE;
-		this.puedeVotar = habilitado;
-	}
-
-	/**
 	 * @return boolean, true si el elector esta habilitado para votar, false en caso
 	 *         contrario.
 	 */
 	public boolean getPuedeVotar() {
-		return puedeVotar;
+		return puedeVotar && voto == null;
 	}
 
 	/**

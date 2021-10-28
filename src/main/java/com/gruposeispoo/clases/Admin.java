@@ -15,7 +15,7 @@ public class Admin {
 //		CREACION DE DISTRITOS
 		//Distrito entreRios = new Distrito(0, 5, "Entre Rios", null, null, null);
 		List<ListaPolitica> listListasPoliticas;
-		Distrito corrientes = new Distrito(3, 3, "Corrientes", null, null,
+		Distrito corrientes = new Distrito(3, 3, "Corrientes", null,
 				listListasPoliticas = new ArrayList<>());
 
 //		CREACION DE CANDIDATOS (DIPUTADOS/SENADORES)

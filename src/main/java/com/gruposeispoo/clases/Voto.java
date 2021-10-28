@@ -11,7 +11,6 @@ public class Voto {
     private MesaElectoral mesaElectoral;
 
     public Voto(Date fechaVoto, List<Candidato> senadores, List<Candidato> diputados, Elector elector, MesaElectoral mesaElectoral) throws Exception {
-        elector.setHabilitadoParaVotar();
         if (!elector.getPuedeVotar()) throw new Exception("El elector no está autorizado para votar.");
         this.senadores = senadores;
         this.diputados = diputados;

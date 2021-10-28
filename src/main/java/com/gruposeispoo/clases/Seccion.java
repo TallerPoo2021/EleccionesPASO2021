@@ -1,21 +1,31 @@
 package com.gruposeispoo.clases;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Seccion implements IContadorVoto {
     private String nombre;
     private List<Circuito> circuitos;
     private Distrito distrito;
-    private List<MesaElectoral> mesasElectorales;
     private List<Elector> padron;
 
-    public Seccion(String nombre, List<Circuito> circuitos, Distrito distrito, List<MesaElectoral> mesasElectorales, List<Elector> padron) {
+    /**
+     *
+     * @param nombre
+     * @param distrito
+     * @param padron
+     */
+    public Seccion(String nombre, Distrito distrito, List<Elector> padron) {
         this.nombre = nombre;
-        this.circuitos = circuitos;
+        this.circuitos = new ArrayList<>();
         this.distrito = distrito;
-        this.mesasElectorales = mesasElectorales;
         this.padron = padron;
+        distrito.agregarSeccion(this);
+    }
+
+    public void agregarCircuito(Circuito circuito){
+        circuitos.add(circuito);
     }
 
     public List<Voto> getTotalVotos(){

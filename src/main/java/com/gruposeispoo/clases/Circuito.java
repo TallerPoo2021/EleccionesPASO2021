@@ -14,17 +14,21 @@ public class Circuito implements IContadorVoto {
      *
      * @param nombre, nombre del circuito.
      * @param numeracion, numero del circuito.
-     * @param listaMesas, las mesas que pertenecen al circuito.
      * @param seccion, referencia a la seccion que pertenece el circuito.
      * @throws Exception Ocurre cuando no le envian ninguna mesa para poner a su cargo.
      */
-    public Circuito(String nombre, int numeracion, List<MesaElectoral> listaMesas, Seccion seccion) throws Exception {
+    public Circuito(String nombre, int numeracion, Seccion seccion) throws Exception {
         if (listaMesas.isEmpty()) throw new Exception("Debe haber al menos una mesa.");
         this.nombre = nombre;
         this.numeracion = numeracion;
-        this.listaMesas = listaMesas;
+        this.listaMesas = new ArrayList<>();
         this.seccion = seccion;
         this.votosCircuito = new ArrayList<>();
+        seccion.agregarCircuito(this);
+    }
+
+    public void agregarMesa(MesaElectoral mesaElectoral){
+        listaMesas.add(mesaElectoral);
     }
 
     public Seccion getSeccion() {

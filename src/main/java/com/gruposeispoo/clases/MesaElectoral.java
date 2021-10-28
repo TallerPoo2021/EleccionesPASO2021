@@ -18,6 +18,7 @@ public class MesaElectoral {
         this.numero = numero;
         this.padron = padron;
         this.circuito = circuito;
+        circuito.agregarMesa(this);
     }
 
     public boolean verificarAutoridad(Elector autoridad){

@@ -1,5 +1,6 @@
 package com.gruposeispoo.clases;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Distrito implements IContadorVoto {
@@ -10,11 +11,19 @@ public class Distrito implements IContadorVoto {
     private List<Elector> padron;
     private List<ListaPolitica> listasPoliticas;
 
-    public Distrito(int MAX_SENADORES, int MAX_DIPUTADOS, String nombre, List<Seccion> secciones, List<Elector> padron, List<ListaPolitica> listasPoliticas) {
+    /**
+     *  Se debe agregar las secciones aparte via agregarSeccion(Seccion seccion)
+     * @param MAX_SENADORES
+     * @param MAX_DIPUTADOS
+     * @param nombre
+     * @param padron
+     * @param listasPoliticas
+     */
+    public Distrito(int MAX_SENADORES, int MAX_DIPUTADOS, String nombre, List<Elector> padron, List<ListaPolitica> listasPoliticas) {
         this.MAX_SENADORES = MAX_SENADORES;
         this.MAX_DIPUTADOS = MAX_DIPUTADOS;
         this.nombre = nombre;
-        this.secciones = secciones;
+        this.secciones = new ArrayList<>();
         this.padron = padron;
         for (ListaPolitica listaPolitica : listasPoliticas) {
             if (listaPolitica.getDiputados().size() > MAX_DIPUTADOS || listaPolitica.getSenadores().size() > MAX_SENADORES) {
@@ -23,6 +32,10 @@ public class Distrito implements IContadorVoto {
             }
         }
         this.listasPoliticas = listasPoliticas;
+    }
+
+    public void agregarSeccion(Seccion seccion){
+        secciones.add(seccion);
     }
 
     @Override
