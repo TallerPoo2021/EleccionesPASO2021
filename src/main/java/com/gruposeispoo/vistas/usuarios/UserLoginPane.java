@@ -366,13 +366,13 @@ public class UserLoginPane extends javax.swing.JPanel {
 
     private void fingerprintIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_fingerprintIconMouseClicked
         Random electorIdRandom = new Random();
-        Integer enteroRand = electorIdRandom.nextInt(2);
+        Integer enteroRand = electorIdRandom.nextInt(17);
 
         if (InputFingerprintChecker.isVisible()) {
             InputFingerprintChecker.setVisible(false);
         }
 
-        enteroRand += 10;
+        enteroRand += 11;
 
         if (Controlador.existeElector(enteroRand)) {
             Controlador.setIdVotante(enteroRand);

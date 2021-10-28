@@ -1,5 +1,6 @@
 package com.gruposeispoo.clases;
 
+import com.gruposeispoo.app.Controlador;
 import java.util.List;
 
 /*
@@ -9,17 +10,18 @@ import java.util.List;
 */
 public class AMainPrueba {
 //	public static void main(String[] args) {
-//		LeerArchivos la = new LeerArchivos();
-//                Admin admin = new Admin();
+////		LeerArchivos la = new LeerArchivos();
+////                Admin admin = new Admin();
+//                //Controlador controlador = new Controlador();
 //                
 //                //PRUEBA REGISTRO ELECTORES
 //		List<Elector> padron = la.leerPadronElectores("csv\\Padron.csv");
 //                //PRUEBA REGISTRO LISTAS POLITICAS
 //                List<ListaPolitica> listas = Admin.generaListas();
 //                
-//                listas.forEach(lista -> {
-//                    System.out.println(lista);
-//                });
+////                listas.forEach(lista -> {
+////                    System.out.println(lista);
+////                });
 //                
 ////                padron.forEach(elector -> {
 ////                    System.out.println(elector);

@@ -3,9 +3,6 @@ package com.gruposeispoo.clases;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.management.Query;
-
-import org.jfree.data.general.AbstractSeriesDataset;
 
 public class Admin {
 
