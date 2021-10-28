@@ -1,9 +1,6 @@
 package com.gruposeispoo.clases;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 public class CamaraElectoral {
 
@@ -74,28 +71,60 @@ public class CamaraElectoral {
 
 	// -----
 	
-	public boolean verificarLista(List<Candidato> candidatos, ListaPolitica lsitaPolitica) {
+	public boolean verificarLista(List<Candidato> candidatos, ListaPolitica listaPolitica) {
+		for (Candidato candidato : candidatos) {
+			if (candidato.getTipoCandidato() == TipoCandidato.DIPUTADO){
+				for (Candidato diputado : listaPolitica.getDiputados()) {
+					if (diputado.equals(candidato)) return true;
+				}
+			}else{
+				for (Candidato senador : listaPolitica.getSenadores()) {
+					if(senador.equals(candidato)) return true;
+				}
+			}
+		}
 		return false;
 	}
 
 	public List<Elector> getPadronPersona(Distrito distrito) {
-		return null;
+		List <Elector> listaElectores = new ArrayList<>(padronOficial.getElectores());
+		listaElectores.removeIf(elector -> !elector.getDomicilio().getProvincia().equalsIgnoreCase(distrito.getNombre()));
+		return listaElectores;
 	}
 
 	public double getPorcentajeElectores(Distrito distrito) {
-		return padronOficial.getElectores().size();
+		return ((double) distrito.getPadron().size()*100)/((double) padronOficial.getElectores().size());
 	}
 
 //	public Map<PartidoPolitico, Double> getPorcentajeVotos(Distrito distrito) {
 //
 //	}
 
-	public Map<PartidoPolitico, Double> getPorcentajeGeneral() {
-		return null;
+	public Map <ListaPolitica, Double> getPorcentajeGeneral() {
+		Map <ListaPolitica, Double> porcentajesListaPolticas = new HashMap<>();
+		List <ListaPolitica> listasPoliticas = new ArrayList<>();
+		for (Distrito distrito : distritos) {
+			listasPoliticas.addAll(distrito.getListasPoliticas());
+		}
+		for (ListaPolitica listaPolitica : listasPoliticas) {
+			porcentajesListaPolticas.put(listaPolitica, listaPolitica.getDistrito().contarVotos(listaPolitica) * 100.0 / listaPolitica.getDistrito().contarVotos());
+		}
+
+		return porcentajesListaPolticas;
 	}
 
-	public List<PartidoPolitico> getPartidosGanadores(Distrito distrito) {
-		return null;
+	public Queue <ListaPolitica> getListasGanadoras(Distrito distrito) {
+		Queue <ListaPolitica> resultado = new PriorityQueue<>();
+		List <ListaPolitica> listasPoliticas = new ArrayList<>(distrito.getListasPoliticas());
+		listasPoliticas.removeIf(listaPolitica -> !((distrito.contarVotos(listaPolitica) * 100.0 / distrito.contarVotos()) < 1.5));
+		for (ListaPolitica listaPolitica : listasPoliticas) {
+			Optional<ListaPolitica> optional = listasPoliticas.stream().max((o1, o2) -> Integer.compare(distrito.contarVotos(o1), distrito.contarVotos(o2)));
+			if (optional.isPresent()){
+				resultado.add(optional.get());
+				listasPoliticas.remove(optional.get());
+			}
+		}
+		return resultado;
 	}
 
 	// -----

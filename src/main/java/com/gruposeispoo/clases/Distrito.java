@@ -61,6 +61,18 @@ public class Distrito implements IContadorVoto {
         return contador;
     }
 
+    /**
+     * @return cantidad de votos generales.
+     */
+    @Override
+    public int contarVotos() {
+        int contador = 0;
+        for (Seccion seccion : secciones) {
+            contador += seccion.contarVotos();
+        }
+        return contador;
+    }
+
     public int getMAX_SENADORES() {
         return MAX_SENADORES;
     }

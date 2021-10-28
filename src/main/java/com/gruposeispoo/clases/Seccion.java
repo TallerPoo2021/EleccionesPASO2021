@@ -65,4 +65,16 @@ public class Seccion implements IContadorVoto {
         }
         return contador;
     }
+
+    /**
+     * @return cantidad de votos generales.
+     */
+    @Override
+    public int contarVotos() {
+        int contador = 0;
+        for (Circuito circuito : circuitos) {
+            contador += circuito.contarVotos();
+        }
+        return contador;
+    }
 }
