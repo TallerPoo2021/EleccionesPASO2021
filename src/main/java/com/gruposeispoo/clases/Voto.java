@@ -166,4 +166,35 @@ public class Voto {
     public List<Candidato> getDiputados() {
         return diputados;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 59 * hash + this.id;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Voto other = (Voto) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Voto{" + "id=" + id + ", corteBoleta=" + corteBoleta + ", fechaVoto=" + fechaVoto + ", elector=" + elector + ", senadores=" + senadores + ", diputados=" + diputados + ", listas=" + listas + ", mesaElectoral=" + mesaElectoral + '}';
+    }
+    
 }

@@ -90,11 +90,20 @@ public class Controlador {
     }
 
     /**
-     * Crea un nuevo voto y lo almacena en la lista de votos
-     *
-     * @return Voto, el voto creado listo para ser seteado
+     * Crea un nuevo voto y lo almacena en la lista de votos. 
+     * 
+     * Voto por categoria:
+     *      - Listas iguales para senadores y diputados: el voto tiene 1 sola lista en listasVotadas
+     *      - Listas distintas para senador y diputado: el voto tiene 2 listas en listasVotadas
+     *      - Una sola lista para senador o diputado: el voto tiene 1 sola lista en listasVotadas
+     *              si la lista es de senador, se ubica en la segunda posición de 
+     *              la lista de listasVotadas, se la lista es de diputados se ubica
+     *              en la primera posicion de la lista de listasVotadas
+     * 
+     * Voto por lista:
+     *      -
      */
-    public static void nuevoVoto() {
+    public static Voto nuevoVoto() {
         Voto voto = new Voto();
         ListaPolitica listaAuxiliar;
 
@@ -102,10 +111,38 @@ public class Controlador {
             throw new NullPointerException("Ningun votando a iniciado el proceso de votacion");
         }
 
-        if (numeroListaVotadaDos == numeroListaVotadaUno || numeroListaVotadaDos == 0) {
-            voto.setElector(buscarElectorPorId(electores, idVotante));
-            voto.agregarListaVotada(buscarListaPorNumero(listas, numeroListaVotadaUno));
-        }else{
+        if (numeroListaVotadaDos == numeroListaVotadaUno || numeroListaVotadaDos == 0 || numeroListaVotadaUno == 0) {
+            if (numeroListaVotadaDos == 0) {
+                voto.setElector(buscarElectorPorId(electores, idVotante));
+                if (numeroListaVotadaUno == 0) {
+                    voto.agregarListaVotada(null);
+                } else {
+                    voto.agregarListaVotada(buscarListaPorNumero(listas, numeroListaVotadaUno));
+                }
+            } else {
+                if (numeroListaVotadaDos == numeroListaVotadaUno) {
+                    voto.setElector(buscarElectorPorId(electores, idVotante));
+                    voto.agregarListaVotada(buscarListaPorNumero(listas, numeroListaVotadaUno));
+                } else {
+                    voto.setElector(buscarElectorPorId(electores, idVotante));
+                    /*
+                        ESTE NEW LISTAPOLITICA() ES PARA ESOS CASOS QUE EN UN VOTO POR CATEGORIA
+                            SE VOTA SOLO LISTA DE SENADORES. Y PARA RESPETAR LA LOGICA DE QUE
+                            LA LISTA DE SENADORES SIEMPRE ESTA EN LA SEGUNDA POSICION DE LA LISTA DE LISTAS 
+                            VOTADAS DEL VOTO
+                    
+                            COMO CONTROLAR:
+                                ESTA NEW LISTAPOLITICA() GENERA UNA LISTA POLITICA CON NUMERO CERO, ESO
+                                SIGNIFICA QUE ESTA DE RELLENO DE DEBERIAMOS IGNORARLA. NINGUNA LISTA POLI
+                                TICA EN GENERAL PARA ESTE SISTEMA DEBERIA TENER NUMERO DE LISTA = 0
+                    
+                            
+                    */
+                    voto.agregarListaVotada(new ListaPolitica());
+                    voto.agregarListaVotada(buscarListaPorNumero(listas, numeroListaVotadaDos));
+                }
+            }
+        } else {
             voto.setElector(buscarElectorPorId(electores, idVotante));
             listaAuxiliar = buscarListaPorNumero(listas, numeroListaVotadaUno);
             voto.agregarListaVotada(listaAuxiliar);
@@ -114,6 +151,12 @@ public class Controlador {
         }
 
         votos.add(voto);
+        
+        /*
+                NO SE ASUSTEN. EL RETURN ES DE PRUEBA. LO UTILIZO PARA QUE CADA VEZ QUE SE HAGA CLICK EN VOTAR
+                                    SE IMPRIMA POR CONSOLA EL VOTO GENERADO
+        */
+        return voto;
     }
 
     /**
