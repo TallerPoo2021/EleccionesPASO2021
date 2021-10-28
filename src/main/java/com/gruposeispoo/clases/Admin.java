@@ -13,7 +13,7 @@ public class Admin {
 //		CREACION DE SECCIONES
 
 //		CREACION DE DISTRITOS
-		Distrito entreRios = new Distrito(0, 5, "Entre Rios", null, null, null);
+		//Distrito entreRios = new Distrito(0, 5, "Entre Rios", null, null, null);
 		List<ListaPolitica> listListasPoliticas;
 		Distrito corrientes = new Distrito(3, 3, "Corrientes", null, null,
 				listListasPoliticas = new ArrayList<>());

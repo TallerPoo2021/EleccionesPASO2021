@@ -20,7 +20,7 @@ public class Candidato extends Elector {
 	 *
 	 */
 	public Candidato(String nombre, String apellido, TipoCandidato tipoCandidato) {
-		super(nombre, apellido);
+		super(nombre, apellido, null);
 		this.tipoCandidato = tipoCandidato;
 	}
 
