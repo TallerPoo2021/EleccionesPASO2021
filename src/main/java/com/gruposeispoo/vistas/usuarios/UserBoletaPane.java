@@ -8,18 +8,18 @@ import javax.swing.border.LineBorder;
 public class UserBoletaPane extends javax.swing.JPanel {
 
     /**
-     * 
-     *  ATRIBUTOS
-     * 
+     *
+     * ATRIBUTOS
+     *
      */
     private int numero;
     private String nombre;
     private UserVotoListaPane contenedor;
     private boolean clicked = false;
     /**
-     * 
-     *  CONSTANTES
-     * 
+     *
+     * CONSTANTES
+     *
      */
     public static final Color COLOR_NARANJA = new Color(255, 127, 0);
     public static final Color COLOR_AMARILLO = new Color(234, 219, 58);
@@ -40,14 +40,23 @@ public class UserBoletaPane extends javax.swing.JPanel {
      * @param nombre
      */
     public UserBoletaPane(UserVotoListaPane contenedor, int numero, String nombre) {
+        initComponents();
         this.contenedor = contenedor;
         this.numero = numero;
         this.nombre = nombre;
     }
 
+    /**
+     * CONSTRUCTOR
+     *
+     * @param contenedor
+     * @param numero
+     * @param nombre
+     * @param color
+     */
     public UserBoletaPane(UserVotoListaPane contenedor, int numero, String nombre, Color color) {
         this(contenedor, numero, nombre);
-        initComponents();
+        escribirNumeroYNombre(numero, nombre);
 
         if (color.equals(COLOR_AZUL)) {
             setBackgroundColorBorder(color);
@@ -104,6 +113,32 @@ public class UserBoletaPane extends javax.swing.JPanel {
             setBackgroundColorBorder(this.COLOR_GRIS);
             setBoletaIcon(iconLista, "/com/gruposeispoo/vistas/images/personasgris.png");
         }
+
+    }
+
+    /**
+     * Escribe correctamente el nombre y numero de la lista en su representación
+     * grafica como boleta
+     *
+     */
+    private void escribirNumeroYNombre(int numero, String nombre) {
+        String numeroLista = "Lista " + numero;
+        String boletaNombre = "<html><p><center>";
+        String[] palabras = nombre.split(" ");
+
+        for (String palabra : palabras) {
+            if (palabra.length() < 5) {
+                boletaNombre += palabra + " ";
+            } else {
+                boletaNombre += palabra + "<br>";
+            }
+        }
+
+        boletaNombre += "</center></p></html>";
+        numeroListaTxt.setText("");
+        numeroListaTxt.setText(numeroLista);
+        nombreListaTxt.setText("");
+        nombreListaTxt.setText(boletaNombre);
     }
 
     public void setNumero(int numero) {

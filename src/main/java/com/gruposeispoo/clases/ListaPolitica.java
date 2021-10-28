@@ -4,91 +4,111 @@ import java.util.List;
 import java.util.Objects;
 
 public class ListaPolitica {
-	private String nombre;
-	private int numero;
-	private List<Candidato> diputados;
-	private List<Candidato> senadores;
-	private Distrito distrito; // tiene
-	private PartidoPolitico partidoPolitico; // representa
 
-	public ListaPolitica(String nombre, int numero, List<Candidato> diputados,
-			List<Candidato> senadores, Distrito distrito, PartidoPolitico partidoPolitico) {
-		this.nombre = nombre;
-		this.numero = numero;
-		this.diputados = diputados;
-		this.senadores = senadores;
-		this.distrito = distrito;
-		this.partidoPolitico = partidoPolitico;
-	}
+    private String nombre;
+    private int numero;
+    private List<Candidato> diputados;
+    private List<Candidato> senadores;
+    private Distrito distrito; // tiene
+    private PartidoPolitico partidoPolitico; // representa
 
-	public String getNombre() {
-		return nombre;
-	}
+    /**
+     * CONSTRUCTOR
+     *
+     *
+     * @param nombre
+     * @param numero
+     * @param diputados
+     * @param senadores
+     * @param distrito
+     * @param partidoPolitico
+     */
+    public ListaPolitica(String nombre, int numero, List<Candidato> diputados,
+            List<Candidato> senadores, Distrito distrito, PartidoPolitico partidoPolitico) {
+        
+        if (nombre == null || nombre.isBlank() || nombre.isEmpty()) {
+            throw new IllegalArgumentException("Nombre Ingresado No Valido");
+        }
+        
+        this.nombre = nombre;
+        this.numero = numero;
+        this.diputados = diputados;
+        this.senadores = senadores;
+        this.distrito = distrito;
+        this.partidoPolitico = partidoPolitico;
+    }
 
-	protected void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
+    public String getNombre() {
+        return nombre;
+    }
 
-	public int getNumero() {
-		return numero;
-	}
+    protected void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
 
-	protected void setNumero(int numero) {
-		this.numero = numero;
-	}
+    public int getNumero() {
+        return numero;
+    }
 
-	protected List<Candidato> getDiputados() {
-		return diputados;
-	}
+    protected void setNumero(int numero) {
+        this.numero = numero;
+    }
 
-	protected void setDiputados(List<Candidato> diputados) {
-		this.diputados = diputados;
-	}
+    protected List<Candidato> getDiputados() {
+        return diputados;
+    }
 
-	protected List<Candidato> getSenadores() {
-		return senadores;
-	}
+    protected void setDiputados(List<Candidato> diputados) {
+        this.diputados = diputados;
+    }
 
-	protected void setSenadores(List<Candidato> senadores) {
-		this.senadores = senadores;
-	}
+    protected List<Candidato> getSenadores() {
+        return senadores;
+    }
 
-	protected Distrito getDistrito() {
-		return distrito;
-	}
+    protected void setSenadores(List<Candidato> senadores) {
+        this.senadores = senadores;
+    }
 
-	protected void setDistrito(Distrito distrito) {
-		this.distrito = distrito;
-	}
+    protected Distrito getDistrito() {
+        return distrito;
+    }
 
-	protected PartidoPolitico getPartidoPolitico() {
-		return partidoPolitico;
-	}
+    protected void setDistrito(Distrito distrito) {
+        this.distrito = distrito;
+    }
 
-	protected void setPartidoPolitico(PartidoPolitico partidoPolitico) {
-		this.partidoPolitico = partidoPolitico;
-	}
+    protected PartidoPolitico getPartidoPolitico() {
+        return partidoPolitico;
+    }
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(nombre, numero);
-	}
+    protected void setPartidoPolitico(PartidoPolitico partidoPolitico) {
+        this.partidoPolitico = partidoPolitico;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		ListaPolitica other = (ListaPolitica) obj;
-		return Objects.equals(nombre, other.nombre) && numero == other.numero;
-	}
+    @Override
+    public int hashCode() {
+        return Objects.hash(nombre, numero);
+    }
 
-	@Override
-	public String toString() {
-		return "ListaPolitica [nombre=" + nombre + ", numero=" + numero + ", partidoPolitico="
-				+ partidoPolitico + "Senadores: " + senadores + "Diputados " + diputados + "]";
-	}
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        ListaPolitica other = (ListaPolitica) obj;
+        return Objects.equals(nombre, other.nombre) && numero == other.numero;
+    }
+
+    @Override
+    public String toString() {
+        return "ListaPolitica [nombre=" + nombre + ", numero=" + numero + ", partidoPolitico="
+                + partidoPolitico + "Senadores: " + senadores + "Diputados " + diputados + "]";
+    }
 }

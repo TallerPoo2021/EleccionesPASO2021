@@ -9,8 +9,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
 public class LeerArchivos {
 	private File archivo;
 	private FileReader fr;
@@ -37,6 +35,7 @@ public class LeerArchivos {
 	 */
 	public List<Elector> cargaElectores(String rutaArchivoElectores) {
 		List<Elector> listaElectores = new ArrayList<Elector>();
+		int idAutoIncrement = 0;
 		try {
 			archivo = new File(rutaArchivoElectores);
 			if (this.archivoVacio(archivo)) {
@@ -51,11 +50,13 @@ public class LeerArchivos {
 				int anioNacimiento = Integer.parseInt(fila[2]);
 				int mesNacimiento = Integer.parseInt(fila[3]);
 				int diaNacimiento = Integer.parseInt(fila[4]);
+				idAutoIncrement++;
 				Elector electorAux = new Elector(fila[0], fila[1],
 						LocalDate.of(anioNacimiento, mesNacimiento, diaNacimiento),
 						TipoDocumento.valueOf(fila[5]),
 						new Domicilio(fila[6], fila[7], fila[8], fila[9]),
-						Integer.parseInt(fila[10]), CamaraElectoral.encontrarMesa(Integer.parseInt(fila[11])));
+						Integer.parseInt(fila[10]),
+						CamaraElectoral.encontrarMesa(Integer.parseInt(fila[11])), idAutoIncrement);
 
 				listaElectores.add(electorAux);
 			}
