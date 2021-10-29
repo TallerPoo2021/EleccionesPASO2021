@@ -22,6 +22,7 @@ public class UserVotoListaPane extends javax.swing.JPanel {
     private JPanel listaSeleccionada = null;
     private List<UserBoletaPane> boletas = new ArrayList<>();
     private boolean selectedListaTieneUnaLista = false;
+    private Controlador controlador;
     private Index contenedor;
 
     /**
@@ -31,6 +32,7 @@ public class UserVotoListaPane extends javax.swing.JPanel {
     public UserVotoListaPane(Index contenedor) {
         initComponents();
         this.contenedor = contenedor;
+        controlador = Controlador.getInstancia();
         //separadorDeBoletaSuperior
         listasContainer.add(Box.createRigidArea(new Dimension(10, 10)));
         //BoletaEnBlancoParaVotoEnBlanco
@@ -57,7 +59,7 @@ public class UserVotoListaPane extends javax.swing.JPanel {
      *
      */
     public void setBoletas() {
-        List<ListaPolitica> listasPoliticas = Controlador.getListasPolticas();
+        List<ListaPolitica> listasPoliticas = controlador.getListasPolticas();
 
         for (ListaPolitica listaPolitica : listasPoliticas) {
             UserBoletaPane nuevaBoleta = (UserBoletaPane) listaPoliticaABoletaPane(listaPolitica.getNumero(), listaPolitica.getNombre());
@@ -534,15 +536,15 @@ public class UserVotoListaPane extends javax.swing.JPanel {
 
         if (listaSelectedContainer.getComponent(0) instanceof UserBoletaPane) {
             boletaVotada = (UserBoletaPane) listaSelectedContainer.getComponent(0);
-            Controlador.setNumeroListaVotadaUno(boletaVotada.getNumero());
+            controlador.setNumeroListaVotadaUno(boletaVotada.getNumero());
         }
 
         if (listaSelectedContainer.getComponent(0) instanceof UserBoletaEnBlancoPane) {
             boletaEnBlanco = (UserBoletaEnBlancoPane) listaSelectedContainer.getComponent(0);
-            Controlador.setNumeroListaVotadaUno(boletaEnBlanco.getNumero());
+            controlador.setNumeroListaVotadaUno(boletaEnBlanco.getNumero());
         }
 
-        Voto EliminarEsto = Controlador.nuevoVoto();
+        Voto EliminarEsto = controlador.nuevoVoto();
         System.out.println(EliminarEsto.toString());
 
         contenedor.setBotoneraEnabled(true);

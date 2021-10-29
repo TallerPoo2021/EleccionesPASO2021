@@ -18,8 +18,8 @@ public class Index extends javax.swing.JFrame {
     private IndexPane indexPane;
     private AdminLoginPane adminLoginPane;
     private UserLoginPane userLoginPane;
-    public static Controlador controlador = new Controlador();
-
+    private Controlador controlador;
+    
     /**
      *
      * CONSTRUCTOR
@@ -30,6 +30,7 @@ public class Index extends javax.swing.JFrame {
         indexPane = new IndexPane(this);
         adminLoginPane = new AdminLoginPane(this);
         userLoginPane = new UserLoginPane(this);
+        controlador = Controlador.getInstancia();
         init();
     }
     

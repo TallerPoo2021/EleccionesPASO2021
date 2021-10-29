@@ -7,11 +7,12 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 public class AdminLoginPane extends javax.swing.JPanel {
+
     /*
         COMENTADO: NO ELIMINAR EL ATRIBUTO DE ABAJO (SE ESTA TRABAJANDO EN LA CLASE adminGraficoPrueba
-    */
+     */
     private AdminGraficoPrueba adminGraficoPrueba = new AdminGraficoPrueba();
-    
+    private Controlador controlador;
     private Index contenedor;
     /**
      * Usuario comienza vacio. No nulo, no con espacios.
@@ -30,6 +31,7 @@ public class AdminLoginPane extends javax.swing.JPanel {
     public AdminLoginPane(Index contenedor) {
         initComponents();
         this.contenedor = contenedor;
+        controlador = Controlador.getInstancia();
         setIngresoSistemaAuditor(false);
     }
 
@@ -441,7 +443,7 @@ public class AdminLoginPane extends javax.swing.JPanel {
      * @param evt
      */
     private void inputUsuarioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_inputUsuarioKeyReleased
-        if (Controlador.existeUsuario(inputUsuario.getText())) {
+        if (controlador.existeUsuario(inputUsuario.getText())) {
             usuario = inputUsuario.getText();
             setButtonIcon(InputUsuarioCheckerIcon, //Etiqueta
                     "/com/gruposeispoo/vistas/images/check.png");    //RutaRelativaIcon
@@ -531,7 +533,7 @@ public class AdminLoginPane extends javax.swing.JPanel {
 
         if (!usuario.isEmpty()) {
             contrasenia = contra;
-            if (Controlador.verificadorDeUsuario(usuario, contrasenia)) {
+            if (controlador.verificadorDeUsuario(usuario, contrasenia)) {
                 setButtonIcon(InputContraseniaCheckerIcon, //Etiqueta
                         "/com/gruposeispoo/vistas/images/check.png");    //RutaRelativaIcon
                 setIngresoSistemaAuditor(true);

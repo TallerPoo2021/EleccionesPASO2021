@@ -13,6 +13,7 @@ public class UserLoginPane extends javax.swing.JPanel {
 
     private String electorFullName = "Lionel Messi";
     private UserVotoPane userVotoPane;
+    private Controlador controlador;
     private Index contenedor;
 
     /**
@@ -23,6 +24,7 @@ public class UserLoginPane extends javax.swing.JPanel {
     public UserLoginPane(Index contenedor) {
         initComponents();
         this.contenedor = contenedor;
+        controlador = Controlador.getInstancia();
         userVotoPane = new UserVotoPane(this.contenedor);
     }
 
@@ -374,8 +376,8 @@ public class UserLoginPane extends javax.swing.JPanel {
 
         enteroRand += 11;
 
-        if (Controlador.existeElector(enteroRand)) {
-            Controlador.setIdVotante(enteroRand);
+        if (controlador.existeElector(enteroRand)) {
+            controlador.setIdVotante(enteroRand);
             /*
             SETEO DEL INPUT CHECKER - PASO 1
              */

@@ -17,6 +17,7 @@ public class UserVotoCatePane extends javax.swing.JPanel {
     private List<UserCorteBoletaPane> boletas = new ArrayList<>();
     private int nroBoletaSenadoresVotada = 0;
     private int nroBoletaDiputadosVotada = 0;
+    private Controlador controlador;
     private Index contenedor;
 
     /**
@@ -26,6 +27,7 @@ public class UserVotoCatePane extends javax.swing.JPanel {
     public UserVotoCatePane(Index contenedor) {
         initComponents();
         this.contenedor = contenedor;
+        controlador = Controlador.getInstancia();
         //separadorDeBoletaSuperior
         senadoresContainer.add(Box.createRigidArea(new Dimension(10, 10)));
         diputadosContainer.add(Box.createRigidArea(new Dimension(10, 10)));
@@ -68,11 +70,11 @@ public class UserVotoCatePane extends javax.swing.JPanel {
                 contenedorDeBoleta = diputadosContainer;
                 nroBoletaDiputadosVotada = boletaBlancoAux.getNumero();
                 listaDiputadosSelectedTxt.setText("LD: " + " " + "en blanco");
-                Controlador.setNumeroListaVotadaUno(nroBoletaDiputadosVotada);
+                controlador.setNumeroListaVotadaUno(nroBoletaDiputadosVotada);
             } else {
                 nroBoletaSenadoresVotada = boletaBlancoAux.getNumero();
                 listaSenadoresSelectedTxt.setText("LS: " + " " + "en blanco");
-                Controlador.setNumeroListaVotadaDos(nroBoletaSenadoresVotada);
+                controlador.setNumeroListaVotadaDos(nroBoletaSenadoresVotada);
             }
         }
 
@@ -83,11 +85,11 @@ public class UserVotoCatePane extends javax.swing.JPanel {
                 contenedorDeBoleta = diputadosContainer;
                 nroBoletaDiputadosVotada = boletaAux.getNumero();
                 listaDiputadosSelectedTxt.setText("LD: " + " " + nroBoletaDiputadosVotada);
-                Controlador.setNumeroListaVotadaUno(nroBoletaDiputadosVotada);
+                controlador.setNumeroListaVotadaUno(nroBoletaDiputadosVotada);
             } else {
                 nroBoletaSenadoresVotada = boletaAux.getNumero();
                 listaSenadoresSelectedTxt.setText("LS: " + " " + nroBoletaSenadoresVotada);
-                Controlador.setNumeroListaVotadaDos(nroBoletaSenadoresVotada);
+                controlador.setNumeroListaVotadaDos(nroBoletaSenadoresVotada);
             }
         }
 
@@ -171,7 +173,7 @@ public class UserVotoCatePane extends javax.swing.JPanel {
      * gráficas de las listas politicas en listasPoliticas s
      */
     public void setBoletas() {
-        List<ListaPolitica> listasPoliticas = Controlador.getListasPolticas();
+        List<ListaPolitica> listasPoliticas = controlador.getListasPolticas();
         List<String> nombresDiputados = new ArrayList<>();
         List<String> nombresSenadores = new ArrayList<>();
 
@@ -582,7 +584,7 @@ public class UserVotoCatePane extends javax.swing.JPanel {
     }//GEN-LAST:event_btnConfirmarTxtMouseClicked
 
     private void btnVotarTxtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVotarTxtMouseClicked
-        Voto EliminarEsto = Controlador.nuevoVoto();
+        Voto EliminarEsto = controlador.nuevoVoto();
         System.out.println(EliminarEsto.toString());
         contenedor.setBotoneraEnabled(true);
         contenedor.generarNuevaInstanciaDeVotacion();
