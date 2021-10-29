@@ -9,7 +9,6 @@ import org.jfree.data.general.AbstractSeriesDataset;
 
 public class Admin {
 
-	private static List<ListaPolitica> todasLasListasPoliticas;
 	private static List<Elector> todosLosElectoresDelPadron;
 
 	/**
@@ -17,7 +16,6 @@ public class Admin {
 	 *
 	 */
 	public Admin() {
-		todasLasListasPoliticas = new ArrayList<>();
 		todosLosElectoresDelPadron = new ArrayList<>();
 	}
 
@@ -40,31 +38,46 @@ public class Admin {
 	 * @return List<>, listas politicas generadas
 	 */
 	public static List<ListaPolitica> generaListas() {
-		List<ListaPolitica> listListasPoliticas;
+		List<ListaPolitica> todasLasListasPoliticas = new ArrayList<>();
 
-		Distrito corrientes = new Distrito(3, 3, "Corrientes", null,
-				listListasPoliticas = new ArrayList<>());
+		// Distritos
+		List<ListaPolitica> listasPoliticasEntreRios;
+		List<ListaPolitica> listasPoliticasCorrientes;
+		List<ListaPolitica> listasPoliticasSantaFe;
+		List<ListaPolitica> listasPoliticasMendoza;
+		List<ListaPolitica> listasPoliticasSalta;
+		List<ListaPolitica> listasPoliticasCordoba;
+		Distrito entreRios = new Distrito(0, 0, null, listasPoliticasEntreRios = new ArrayList<>());
+		Distrito corrientes = new Distrito(3, 3, "Corrientes",
+				listasPoliticasCorrientes = new ArrayList<>());
+		Distrito santaFe = new Distrito(0, 0, null, listasPoliticasSantaFe = new ArrayList<>());
+		Distrito mendoza = new Distrito(0, 0, null, listasPoliticasMendoza = new ArrayList<>());
+		Distrito salta = new Distrito(0, 0, null, listasPoliticasSalta = new ArrayList<>());
+		Distrito cordoba = new Distrito(0, 0, null, listasPoliticasCordoba = new ArrayList<>());
+
 		/*
 		 * 
 		 * CREACION DE CANDIDATOS (DIPUTADOS/SENADORES)
 		 */
 		// Senadores
 		List<Candidato> senCorrienteAccionCorriente = new ArrayList<Candidato>();
-
 		senCorrienteAccionCorriente
 				.add(new Candidato("Jorge Americo", "Parthimos", TipoCandidato.SENADOR));
 		senCorrienteAccionCorriente
 				.add(new Candidato("Mirta Teresa", "Toffaleti", TipoCandidato.SENADOR));
 
 		List<Candidato> senCorrienteFrenteDeTodos = new ArrayList<Candidato>();
-
 		senCorrienteFrenteDeTodos.add(new Candidato("Alejandro", "Karlen", TipoCandidato.SENADOR));
 		senCorrienteFrenteDeTodos
 				.add(new Candidato("Nieve de los Angeles", "Cuenca", TipoCandidato.SENADOR));
 
 		// Diputados
-		List<Candidato> dipuCorrientesAccionCorriente = new ArrayList<Candidato>();
+		List<Candidato> dipuEntreRiosPodemosEntreRios = new ArrayList<Candidato>();
+		dipuEntreRiosPodemosEntreRios.add(new Candidato("", "", TipoCandidato.DIPUTADO));
+		dipuEntreRiosPodemosEntreRios.add(new Candidato("", "", TipoCandidato.DIPUTADO));
+		dipuEntreRiosPodemosEntreRios.add(new Candidato("", "", TipoCandidato.DIPUTADO));
 
+		List<Candidato> dipuCorrientesAccionCorriente = new ArrayList<Candidato>();
 		dipuCorrientesAccionCorriente
 				.add(new Candidato("Anibal Daniel", "Godoy", TipoCandidato.DIPUTADO));
 		dipuCorrientesAccionCorriente
@@ -87,56 +100,46 @@ public class Admin {
 		ListaPolitica compromisoFederal = new ListaPolitica("Compromiso Federal", 82,
 				dipuCorrientesAccionCorriente, senCorrienteAccionCorriente, corrientes,
 				accionCorrentina);
-
-		listListasPoliticas.add(compromisoFederal);
-
 		ListaPolitica todos = new ListaPolitica("Todos", 501, dipuCorrientesfrenteDeTodos,
 				senCorrienteFrenteDeTodos, corrientes, frenteDeTodos);
-
-		listListasPoliticas.add(todos);
+		listasPoliticasCorrientes.add(compromisoFederal);
+		listasPoliticasCorrientes.add(todos);
 
 		todasLasListasPoliticas.add(compromisoFederal);
 		todasLasListasPoliticas.add(todos);
+
 		return todasLasListasPoliticas;
 	}
 
 	/**
-	 * Metodo que devuelve una lista con todos los diputados de todas las listas.
-	 *
-	 * @return List<Candidato>, lista de diputados
+	 * Metodo que devuelve una lista, que dentro tiene otra lista de candidatos.
 	 *
 	 */
-	public static List<Candidato> generarListaDiputadosTotales() {
+	public static List<List<Candidato>> generarListaDiputadosTotales() {
 
 		List<ListaPolitica> listasPolitias = generaListas();
-		List<Candidato> diputadosList = new ArrayList<Candidato>();
+		List<List<Candidato>> listDelistaDeDiputados = new ArrayList<>();
 
 		for (ListaPolitica listaPolitica : listasPolitias) {
-			for (Candidato dipu : listaPolitica.getDiputados()) {
-				diputadosList.add(dipu);
-			}
+			listDelistaDeDiputados.add(listaPolitica.getDiputados());
 		}
 
-		return diputadosList;
+		return listDelistaDeDiputados;
 	}
 
 	/**
-	 * Metodo que devuelve una lista con todos los senadores de todas las listas.
-	 *
-	 * @return List<Candidato>, lista de senadores
+	 * Metodo que devuelve una lista, que dentro tiene otra lista de candidatos.
 	 *
 	 */
-	public static List<Candidato> generarListaSenadoresTotales() {
+	public static List<List<Candidato>> generarListaSenadoresTotales() {
 
 		List<ListaPolitica> listasPolitias = generaListas();
-		List<Candidato> senadoresList = new ArrayList<Candidato>();
+		List<List<Candidato>> listDelistaDeSenadores = new ArrayList<>();
 
 		for (ListaPolitica listaPolitica : listasPolitias) {
-			for (Candidato senador : listaPolitica.getSenadores()) {
-				senadoresList.add(senador);
-			}
+			listDelistaDeSenadores.add(listaPolitica.getSenadores());
 		}
 
-		return senadoresList;
+		return listDelistaDeSenadores;
 	}
 }
