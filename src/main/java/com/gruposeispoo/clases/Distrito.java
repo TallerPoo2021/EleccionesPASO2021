@@ -12,63 +12,44 @@ public class Distrito implements IContadorVoto {
 	private List<ListaPolitica> listasPoliticas;
 
 	/**
-	 * Constructor parametrizado
-	 * 
-	 * @param MAX_SENADORES
-	 * @param MAX_DIPUTADOS
-	 * @param nombre
-	 * @param listasPoliticas
-	 * 
-	 * @author Kevin
-	 */
-	public Distrito(int MAX_SENADORES, int MAX_DIPUTADOS, String nombre,
-			List<ListaPolitica> listasPoliticas) {
-		this.MAX_SENADORES = MAX_SENADORES;
-		this.MAX_DIPUTADOS = MAX_DIPUTADOS;
-		this.nombre = nombre;
-		this.secciones = new ArrayList<>();
-		for (ListaPolitica listaPolitica : listasPoliticas) {
-			if (listaPolitica.getDiputados().size() > MAX_DIPUTADOS
-					|| listaPolitica.getSenadores().size() > MAX_SENADORES) {
-				listasPoliticas.remove(listaPolitica);
-				System.out.println("La lista " + listaPolitica.getNombre()
-						+ " excede la cantidad de senadores y/o diputados posibles para este distrito por lo tanto fue removido.");
-			}
-		}
-		this.listasPoliticas = listasPoliticas;
-	}
-
-	/**
+	 * Constructor del distrito.
 	 * Se debe agregar las secciones aparte via agregarSeccion(Seccion seccion)
-	 * 
+	 * Se debe agregar las listas politicas aparte via agregarListaPolitica(ListaPolitica listaPolitica)
+	 *
 	 * @param MAX_SENADORES
 	 * @param MAX_DIPUTADOS
 	 * @param nombre
 	 * @param padron
-	 * @param listasPoliticas
 	 */
-	public Distrito(int MAX_SENADORES, int MAX_DIPUTADOS, String nombre, List<Elector> padron,
-			List<ListaPolitica> listasPoliticas) {
+	public Distrito(int MAX_SENADORES, int MAX_DIPUTADOS, String nombre, List<Elector> padron) {
 		this.MAX_SENADORES = MAX_SENADORES;
 		this.MAX_DIPUTADOS = MAX_DIPUTADOS;
 		this.nombre = nombre;
 		this.secciones = new ArrayList<>();
 		this.padron = padron;
-		for (ListaPolitica listaPolitica : listasPoliticas) {
-			if (listaPolitica.getDiputados().size() > MAX_DIPUTADOS
-					|| listaPolitica.getSenadores().size() > MAX_SENADORES) {
-				listasPoliticas.remove(listaPolitica);
-				System.out.println("La lista " + listaPolitica.getNombre()
-						+ " excede la cantidad de senadores y/o diputados posibles para este distrito por lo tanto fue removido.");
-			}
-		}
-		this.listasPoliticas = listasPoliticas;
+		this.listasPoliticas = new ArrayList<>();
 	}
 
+	/**
+	 * Se agrega una nueva seccion al distrito.
+	 * @param seccion, la seccion a agregar.
+	 */
 	public void agregarSeccion(Seccion seccion) {
 		secciones.add(seccion);
 	}
 
+	/**
+	 * Se agrega una nueva lista politica al distrito.
+	 * @param listaPolitica, lista politica a agregar.
+	 */
+	public void agregarListaPolitica(ListaPolitica listaPolitica){
+		listasPoliticas.add(listaPolitica);
+	}
+
+	/**
+	 * Cuenta la cantidad de votos en blanco.
+	 * @return cantidad de votos en blancos totales.
+	 */
 	@Override
 	public int contarVotosBlanco() {
 		int contador = 0;
@@ -78,6 +59,11 @@ public class Distrito implements IContadorVoto {
 		return contador;
 	}
 
+	/**
+	 * Cuenta la cantidad de votos en blanco del tipo de candidato que se le pase.
+	 * @param tipoCandidato, El tipo de candidato que es (senador o diputado).
+	 * @return devuelve la cantidad de votos en blanco de este tipo de candidato.
+	 */
 	@Override
 	public int contarVotosBlanco(TipoCandidato tipoCandidato) {
 		int contador = 0;
@@ -87,6 +73,11 @@ public class Distrito implements IContadorVoto {
 		return contador;
 	}
 
+	/**
+	 * Cuenta los votos de este candidato.
+	 * @param candidato, referencia de la persona postulada a un cargo.
+	 * @return cantidad de votos hacia la persona enviada.
+	 */
 	@Override
 	public int contarVotos(Candidato candidato) {
 		int contador = 0;
@@ -96,6 +87,11 @@ public class Distrito implements IContadorVoto {
 		return contador;
 	}
 
+	/**
+	 * Cuenta los votos de esta lista politica.
+	 * @param listaPolitica, lista politica de la cual se quiere saber los votos que obtuvo.
+	 * @return la cantidad de votos que recibió la lista.
+	 */
 	@Override
 	public int contarVotos(ListaPolitica listaPolitica) {
 		int contador = 0;
@@ -106,6 +102,7 @@ public class Distrito implements IContadorVoto {
 	}
 
 	/**
+	 * Cuenta los votos totales.
 	 * @return cantidad de votos generales.
 	 */
 	@Override
@@ -117,26 +114,50 @@ public class Distrito implements IContadorVoto {
 		return contador;
 	}
 
+	/**
+	 * Devuelve la cantidad de senadores maxima del distrito.
+	 * @return la cantidad maxima de senadores.
+	 */
 	public int getMAX_SENADORES() {
 		return MAX_SENADORES;
 	}
 
+	/**
+	 * Devuelve la cantidad de diputados maxima del distrito.
+	 * @return la cantidad maxima de diputados.
+	 */
 	public int getMAX_DIPUTADOS() {
 		return MAX_DIPUTADOS;
 	}
 
+	/**
+	 * Devuelve el nombre del distrito.
+	 * @return el nombre del distrito.
+	 */
 	public String getNombre() {
 		return nombre;
 	}
 
+	/**
+	 * Devuelve la cantidad de senadores maxima del distrito.
+	 * @return la cantidad maxima de senadores.
+	 */
 	public List<Seccion> getSecciones() {
 		return secciones;
 	}
 
+	/**
+	 * Devuelve la cantidad de senadores maxima del distrito.
+	 * @return la cantidad maxima de senadores.
+	 */
 	public List<Elector> getPadron() {
 		return padron;
 	}
 
+	/**
+	 * Devuelve las .
+	 * @return las listas politicas del distrito.
+	 */
 	public List<ListaPolitica> getListasPoliticas() {
 		return listasPoliticas;
 	}

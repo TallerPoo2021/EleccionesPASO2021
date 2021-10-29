@@ -92,6 +92,11 @@ public class Admin {
         dipuCorrientesfrenteDeTodos
                 .add(new Candidato("Alfredo Alejandro", "Moline", TipoCandidato.DIPUTADO));
 
+		List<Candidato> dipuSaltaFelicidad = new ArrayList<Candidato>();
+		dipuSaltaFelicidad.add(new Candidato("Tane", "Da Souza Correa", TipoCandidato.DIPUTADO));
+		dipuSaltaFelicidad.add(new Candidato("Maria Laura", "Thomas", TipoCandidato.DIPUTADO));
+		dipuSaltaFelicidad.add(new Candidato("Guido", "Giacosa", TipoCandidato.DIPUTADO));
+
 //		CREACION DE PARTIDOS/COALICIONES POLITICAS
         PartidoPolitico accionCorrentina = new PartidoPolitico("Accion Correntina");
         PartidoPolitico frenteDeTodos = new PartidoPolitico("Frente de Todos");
