@@ -21,6 +21,7 @@ public class Distrito implements IContadorVoto {
 	 * 
 	 * @author Kevin
 	 */
+	/*
 	public Distrito(int MAX_SENADORES, int MAX_DIPUTADOS, String nombre,
 			List<ListaPolitica> listasPoliticas) {
 		this.MAX_SENADORES = MAX_SENADORES;
@@ -36,7 +37,7 @@ public class Distrito implements IContadorVoto {
 			}
 		}
 		this.listasPoliticas = listasPoliticas;
-	}
+	}*/
 
 	/**
 	 * Se debe agregar las secciones aparte via agregarSeccion(Seccion seccion)
@@ -45,10 +46,8 @@ public class Distrito implements IContadorVoto {
 	 * @param MAX_DIPUTADOS
 	 * @param nombre
 	 * @param padron
-	 * @param listasPoliticas
 	 */
-	public Distrito(int MAX_SENADORES, int MAX_DIPUTADOS, String nombre, List<Elector> padron,
-			List<ListaPolitica> listasPoliticas) {
+	public Distrito(int MAX_SENADORES, int MAX_DIPUTADOS, String nombre, List<Elector> padron) {
 		this.MAX_SENADORES = MAX_SENADORES;
 		this.MAX_DIPUTADOS = MAX_DIPUTADOS;
 		this.nombre = nombre;
@@ -67,6 +66,10 @@ public class Distrito implements IContadorVoto {
 
 	public void agregarSeccion(Seccion seccion) {
 		secciones.add(seccion);
+	}
+
+	public void agregarListaPolitica(ListaPolitica listaPolitica){
+		listasPoliticas.add(listaPolitica);
 	}
 
 	@Override

@@ -10,9 +10,38 @@ public class CamaraElectoral {
 
 	public CamaraElectoral(Distrito[] distritos, List<PartidoPolitico> partidosPoliticos,
 			PadronElectoral padronOficial) {
-		this.distritos = distritos;
+		this.distritos = crearDistritos();
 		this.partidosPoliticos = partidosPoliticos;
 		this.padronOficial = padronOficial;
+	}
+
+	private Distrito[] crearDistritos(){
+		/*
+		Distrito entreRios = new Distrito(5,4,"Entre Rios", repartirPadron("Entre Rios"));
+		Distrito corrientes = new Distrito(3, 3, "Corrientes", repartirPadron("Corrientes"));
+		Distrito santaFe = new Distrito(5, 4, "Santa Fe", repartirPadron("Santa Fe"));
+		Distrito mendoza = new Distrito(8, 3, "Mendoza", repartirPadron("Mendoza"));
+		Distrito salta = new Distrito(7, 9, "Salta", repartirPadron("Salta"));
+		Distrito cordoba = new Distrito(4, 3, "Cordoba", repartirPadron("Cordoba"));
+		 */
+		return new Distrito[]{ new Distrito(5,4,"Entre Rios", repartirPadron("Entre Rios")), new Distrito(3, 3, "Corrientes", repartirPadron("Corrientes")), new Distrito(5, 4, "Santa Fe", repartirPadron("Santa Fe")), new Distrito(8, 3, "Mendoza", repartirPadron("Mendoza")), new Distrito(7, 9, "Salta", repartirPadron("Salta")), new Distrito(4, 3, "Cordoba", repartirPadron("Cordoba"))};
+	}
+
+	private List<Elector> repartirPadron (String distrito){
+		List<Elector> padronDistrito = new ArrayList<>();
+		for (Elector elector : padronOficial.getElectores()) {
+			if (elector.getDomicilio().getProvincia().equalsIgnoreCase(distrito)){
+				padronDistrito.add(elector);
+			}
+		}
+		return padronDistrito;
+	}
+
+	public static Distrito encontrarDistrito(String nombreDistrito){
+		for (Distrito distrito : distritos) {
+			if (distrito.getNombre().equalsIgnoreCase(nombreDistrito)) return distrito;
+		}
+		return null;
 	}
 
 	protected Distrito[] getDistritos() {
