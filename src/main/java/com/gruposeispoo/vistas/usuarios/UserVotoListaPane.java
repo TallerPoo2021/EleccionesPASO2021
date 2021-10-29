@@ -2,6 +2,7 @@ package com.gruposeispoo.vistas.usuarios;
 
 import com.gruposeispoo.app.Controlador;
 import com.gruposeispoo.clases.ListaPolitica;
+import com.gruposeispoo.clases.Voto;
 import com.gruposeispoo.vistas.Index;
 import java.awt.Color;
 import java.awt.Component;
@@ -21,6 +22,7 @@ public class UserVotoListaPane extends javax.swing.JPanel {
     private JPanel listaSeleccionada = null;
     private List<UserBoletaPane> boletas = new ArrayList<>();
     private boolean selectedListaTieneUnaLista = false;
+    private Controlador controlador;
     private Index contenedor;
 
     /**
@@ -30,8 +32,11 @@ public class UserVotoListaPane extends javax.swing.JPanel {
     public UserVotoListaPane(Index contenedor) {
         initComponents();
         this.contenedor = contenedor;
+        controlador = Controlador.getInstancia();
         //separadorDeBoletaSuperior
         listasContainer.add(Box.createRigidArea(new Dimension(10, 10)));
+        //BoletaEnBlancoParaVotoEnBlanco
+        listasContainer.add(new UserBoletaEnBlancoPane(this));
         //MostrarBoletasEnPantalla
         mostrarBoletas();
         //Comienzo con botones invisibles
@@ -54,7 +59,7 @@ public class UserVotoListaPane extends javax.swing.JPanel {
      *
      */
     public void setBoletas() {
-        List<ListaPolitica> listasPoliticas = Controlador.getListasPolticas();
+        List<ListaPolitica> listasPoliticas = controlador.getListasPolticas();
 
         for (ListaPolitica listaPolitica : listasPoliticas) {
             UserBoletaPane nuevaBoleta = (UserBoletaPane) listaPoliticaABoletaPane(listaPolitica.getNumero(), listaPolitica.getNombre());
@@ -120,10 +125,6 @@ public class UserVotoListaPane extends javax.swing.JPanel {
     public JPanel listaPoliticaABoletaPane(Integer numero, String nombre) {
         Random colorRandom = new Random();
         Integer enteroRand = colorRandom.nextInt(10);
-
-        if (numero == null || nombre == null) {
-            return new UserBoletaEnBlancoPane(this);
-        }
 
         return new UserBoletaPane(this, numero, nombre, getOneColor(enteroRand));
     }
@@ -530,9 +531,22 @@ public class UserVotoListaPane extends javax.swing.JPanel {
     }//GEN-LAST:event_btnConfirmarTxtMouseClicked
 
     private void btnVotarTxtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVotarTxtMouseClicked
-        UserBoletaPane boletaVotada = (UserBoletaPane) listaSelectedContainer.getComponent(0);
-        Controlador.setNumeroListaVotadaUno(boletaVotada.getNumero());
-        Controlador.nuevoVoto();
+        UserBoletaPane boletaVotada;
+        UserBoletaEnBlancoPane boletaEnBlanco;
+
+        if (listaSelectedContainer.getComponent(0) instanceof UserBoletaPane) {
+            boletaVotada = (UserBoletaPane) listaSelectedContainer.getComponent(0);
+            controlador.setNumeroListaVotadaUno(boletaVotada.getNumero());
+        }
+
+        if (listaSelectedContainer.getComponent(0) instanceof UserBoletaEnBlancoPane) {
+            boletaEnBlanco = (UserBoletaEnBlancoPane) listaSelectedContainer.getComponent(0);
+            controlador.setNumeroListaVotadaUno(boletaEnBlanco.getNumero());
+        }
+
+        Voto EliminarEsto = controlador.nuevoVoto();
+        System.out.println(EliminarEsto.toString());
+
         contenedor.setBotoneraEnabled(true);
         contenedor.generarNuevaInstanciaDeVotacion();
     }//GEN-LAST:event_btnVotarTxtMouseClicked

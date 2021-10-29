@@ -13,6 +13,7 @@ public class UserLoginPane extends javax.swing.JPanel {
 
     private String electorFullName = "Lionel Messi";
     private UserVotoPane userVotoPane;
+    private Controlador controlador;
     private Index contenedor;
 
     /**
@@ -23,6 +24,7 @@ public class UserLoginPane extends javax.swing.JPanel {
     public UserLoginPane(Index contenedor) {
         initComponents();
         this.contenedor = contenedor;
+        controlador = Controlador.getInstancia();
         userVotoPane = new UserVotoPane(this.contenedor);
     }
 
@@ -366,16 +368,16 @@ public class UserLoginPane extends javax.swing.JPanel {
 
     private void fingerprintIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_fingerprintIconMouseClicked
         Random electorIdRandom = new Random();
-        Integer enteroRand = electorIdRandom.nextInt(2);
+        Integer enteroRand = electorIdRandom.nextInt(17);
 
         if (InputFingerprintChecker.isVisible()) {
             InputFingerprintChecker.setVisible(false);
         }
 
-        enteroRand += 10;
+        enteroRand += 11;
 
-        if (Controlador.existeElector(enteroRand)) {
-            Controlador.setIdVotante(enteroRand);
+        if (controlador.existeElector(enteroRand)) {
+            controlador.setIdVotante(enteroRand);
             /*
             SETEO DEL INPUT CHECKER - PASO 1
              */

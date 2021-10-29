@@ -17,8 +17,8 @@ public class UserCorteBoletaPane extends javax.swing.JPanel {
 
     private List<String> nombres;
 
-    private boolean flagDiputados;
     private UserVotoCatePane contenedor;
+    private boolean flagDiputados;
     private boolean clicked = false;
 
     /**
@@ -46,6 +46,20 @@ public class UserCorteBoletaPane extends javax.swing.JPanel {
         this.numero = numero;
         this.nombres = nombres;
         this.flagDiputados = flag;
+    }
+
+    public void setClicked(boolean clicked) {
+        this.clicked = clicked;
+        
+        if (clicked) {
+            setCandidatoIcon(iconCandidato, "/com/gruposeispoo/vistas/images/personasceleste.png");
+            candidatosTxt.setForeground(new Color(43, 179, 205));
+            numeroListaTxt.setForeground(new Color(43, 179, 205));
+            return;
+        }
+            setCandidatoIcon(iconCandidato, "/com/gruposeispoo/vistas/images/personasgris.png");
+            candidatosTxt.setForeground(new Color(127,127,127));
+            numeroListaTxt.setForeground(new Color(127,127,127));
     }
 
     public int getNumero() {
@@ -150,9 +164,7 @@ public class UserCorteBoletaPane extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void bgContainerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bgContainerMouseClicked
-        setCandidatoIcon(iconCandidato, "/com/gruposeispoo/vistas/images/personasceleste.png");
-        candidatosTxt.setForeground(new Color(43, 179, 205));
-        numeroListaTxt.setForeground(new Color(43, 179, 205));
+        contenedor.actualizarTodasLasBoletas(this);
     }//GEN-LAST:event_bgContainerMouseClicked
 
     private void bgContainerMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bgContainerMouseEntered

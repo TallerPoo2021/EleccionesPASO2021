@@ -3,12 +3,13 @@ package com.gruposeispoo.vistas.usuarios;
 import java.awt.Color;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import javax.swing.border.LineBorder;
 
 public class UserBoletaEnBlancoPane extends javax.swing.JPanel {
 
     private UserVotoListaPane contenedorLista;
+    private int numero = 0;
     private UserVotoCatePane contenedorCategoria;
+    private boolean flagDiputados;
     private boolean clicked = false;
 
     /**
@@ -17,17 +18,9 @@ public class UserBoletaEnBlancoPane extends javax.swing.JPanel {
      */
     public UserBoletaEnBlancoPane() {
         initComponents();
-    }
-
-    /**
-     * CONSTRUCTOR
-     *
-     * @param contenedor
-     */
-    public UserBoletaEnBlancoPane(UserVotoCatePane contenedor) {
-        this();
-        this.contenedorCategoria = contenedor;
-
+        contenedorLista = null;
+        contenedorCategoria = null;
+        flagDiputados = false;
     }
 
     /**
@@ -40,8 +33,33 @@ public class UserBoletaEnBlancoPane extends javax.swing.JPanel {
         this.contenedorLista = contenedor;
     }
 
-    private void setBoletaIcon(JLabel etiqueta, String rutaRelativaIcon) {
-        etiqueta.setIcon(new ImageIcon(getClass().getResource(rutaRelativaIcon)));
+    /**
+     * CONSTRUCTOR
+     *
+     * @param contenedor
+     */
+    public UserBoletaEnBlancoPane(UserVotoCatePane contenedor, boolean flag) {
+        this();
+        this.contenedorCategoria = contenedor;
+        this.flagDiputados = flag;
+    }
+
+    public int getNumero() {
+        return numero;
+    }
+
+    public boolean isFlagDiputados() {
+        return flagDiputados;
+    }
+
+    public void setClicked(boolean clicked) {
+        this.clicked = clicked;
+
+        if (clicked) {
+            numeroListaTxt.setForeground(new Color(43, 179, 205));
+            return;
+        }
+        numeroListaTxt.setForeground(new Color(127, 127, 127));
     }
 
     @SuppressWarnings("unchecked")
@@ -70,7 +88,7 @@ public class UserBoletaEnBlancoPane extends javax.swing.JPanel {
 
         numeroListaTxt.setBackground(new java.awt.Color(255, 255, 255));
         numeroListaTxt.setFont(new java.awt.Font("Roboto Medium", 1, 14)); // NOI18N
-        numeroListaTxt.setForeground(new java.awt.Color(43, 179, 205));
+        numeroListaTxt.setForeground(new java.awt.Color(127, 127, 127));
         numeroListaTxt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         numeroListaTxt.setText("LISTA VACIA");
 
@@ -108,11 +126,11 @@ public class UserBoletaEnBlancoPane extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void bgContainerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bgContainerMouseClicked
-        if (contenedorLista != null) {
+        if (contenedorCategoria == null) {
             contenedorLista.selectedListaPanel(this);
-            return;
+        } else {
+            contenedorCategoria.actualizarTodasLasBoletas(this);
         }
-        
     }//GEN-LAST:event_bgContainerMouseClicked
 
     private void bgContainerMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bgContainerMouseEntered

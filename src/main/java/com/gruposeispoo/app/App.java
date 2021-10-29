@@ -7,6 +7,5 @@ public class App {
         Index clienteIndex = new Index();
         
         clienteIndex.setVisible(true);
-        
     }
 }

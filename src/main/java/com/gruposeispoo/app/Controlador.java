@@ -10,48 +10,60 @@ import java.util.ArrayList;
 
 public class Controlador {
 
-    private static int idVotante = 0;
-    private static int numeroListaVotadaUno = 0;
-    private static int numeroListaVotadaDos = 0;
-    private static List<ListaPolitica> listas;
-    private static List<Elector> electores;
-    private static List<Voto> votos;
-
+    private int idVotante = 0;
+    private int numeroListaVotadaUno = 0;
+    private int numeroListaVotadaDos = 0;
+    private List<ListaPolitica> listas;
+    private List<Elector> electores;
+    private List<Voto> votos;
     private Admin admin;
+    private static Controlador controlador;
 
     /**
      * CONSTRUCTOR
      *
      */
-    public Controlador() {
+    private Controlador() {
         admin = new Admin();
         listas = Admin.generaListas();
         votos = new ArrayList<>();
         electores = Admin.generarElectores();
     }
 
-    public static int getIdVotante() {
+    /**
+     * SINGLETON
+     * 
+     * @return 
+     */
+    public static Controlador getInstancia() {
+        if (controlador == null) {
+            controlador = new Controlador();
+        }
+        return controlador;
+    }
+
+    public  int getIdVotante() {
         return idVotante;
     }
 
-    public static void setIdVotante(int idDelVotante) {
+    public  void setIdVotante(int idDelVotante) {
         idVotante = idDelVotante;
     }
 
-    public static int getNumeroListaVotadaUno() {
+    public  int getNumeroListaVotadaUno() {
         return numeroListaVotadaUno;
     }
 
-    public static int getNumeroListaVotadaDos() {
+    public  int getNumeroListaVotadaDos() {
         return numeroListaVotadaDos;
     }
 
-    public static void setNumeroListaVotadaUno(int numeroListaVotadaUno) {
-        Controlador.numeroListaVotadaUno = numeroListaVotadaUno;
+    public  void setNumeroListaVotadaUno(int numeroListaVotadaUno) {
+        this.numeroListaVotadaUno = numeroListaVotadaUno;
     }
 
-    public static void setNumeroListaVotadaDos(int numeroListaVotadaDos) {
-        Controlador.numeroListaVotadaDos = numeroListaVotadaDos;
+    public  void setNumeroListaVotadaDos(int numeroListaVotadaDos) {
+        this.numeroListaVotadaDos = numeroListaVotadaDos;
     }
 
     /**
@@ -61,7 +73,7 @@ public class Controlador {
      * @param numeroDeLista
      * @return
      */
-    private static Elector buscarElectorPorId(List<Elector> electores, int idElector) {
+    private  Elector buscarElectorPorId(List<Elector> electores, int idElector) {
         Elector electorEncontrado = null;
 
         for (Elector elector : electores) {
@@ -80,7 +92,7 @@ public class Controlador {
      * @param id
      * @return
      */
-    public static boolean existeElector(int id) {
+    public  boolean existeElector(int id) {
         for (Elector elector : electores) {
             if (elector.getId() == id) {
                 return true;
@@ -90,11 +102,19 @@ public class Controlador {
     }
 
     /**
-     * Crea un nuevo voto y lo almacena en la lista de votos
+     * Crea un nuevo voto y lo almacena en la lista de votos.
      *
-     * @return Voto, el voto creado listo para ser seteado
+     * Voto por categoria: - Listas iguales para senadores y diputados: el voto
+     * tiene 1 sola lista en listasVotadas - Listas distintas para senador y
+     * diputado: el voto tiene 2 listas en listasVotadas - Una sola lista para
+     * senador o diputado: el voto tiene 1 sola lista en listasVotadas si la
+     * lista es de senador, se ubica en la segunda posición de la lista de
+     * listasVotadas, se la lista es de diputados se ubica en la primera
+     * posicion de la lista de listasVotadas
+     *
+     * Voto por lista: -
      */
-    public static void nuevoVoto() {
+    public  Voto nuevoVoto() {
         Voto voto = new Voto();
         ListaPolitica listaAuxiliar;
 
@@ -102,10 +122,38 @@ public class Controlador {
             throw new NullPointerException("Ningun votando a iniciado el proceso de votacion");
         }
 
-        if (numeroListaVotadaDos == numeroListaVotadaUno || numeroListaVotadaDos == 0) {
-            voto.setElector(buscarElectorPorId(electores, idVotante));
-            voto.agregarListaVotada(buscarListaPorNumero(listas, numeroListaVotadaUno));
-        }else{
+        if (numeroListaVotadaDos == numeroListaVotadaUno || numeroListaVotadaDos == 0 || numeroListaVotadaUno == 0) {
+            if (numeroListaVotadaDos == 0) {
+                voto.setElector(buscarElectorPorId(electores, idVotante));
+                if (numeroListaVotadaUno == 0) {
+                    voto.agregarListaVotada(null);
+                } else {
+                    voto.agregarListaVotada(buscarListaPorNumero(listas, numeroListaVotadaUno));
+                }
+            } else {
+                if (numeroListaVotadaDos == numeroListaVotadaUno) {
+                    voto.setElector(buscarElectorPorId(electores, idVotante));
+                    voto.agregarListaVotada(buscarListaPorNumero(listas, numeroListaVotadaUno));
+                } else {
+                    voto.setElector(buscarElectorPorId(electores, idVotante));
+                    /*
+                        ESTE NEW LISTAPOLITICA() ES PARA ESOS CASOS QUE EN UN VOTO POR CATEGORIA
+                            SE VOTA SOLO LISTA DE SENADORES. Y PARA RESPETAR LA LOGICA DE QUE
+                            LA LISTA DE SENADORES SIEMPRE ESTA EN LA SEGUNDA POSICION DE LA LISTA DE LISTAS 
+                            VOTADAS DEL VOTO
+                    
+                            COMO CONTROLAR:
+                                ESTA NEW LISTAPOLITICA() GENERA UNA LISTA POLITICA CON NUMERO CERO, ESO
+                                SIGNIFICA QUE ESTA DE RELLENO DE DEBERIAMOS IGNORARLA. NINGUNA LISTA POLI
+                                TICA EN GENERAL PARA ESTE SISTEMA DEBERIA TENER NUMERO DE LISTA = 0
+                    
+                            
+                     */
+                    voto.agregarListaVotada(new ListaPolitica());
+                    voto.agregarListaVotada(buscarListaPorNumero(listas, numeroListaVotadaDos));
+                }
+            }
+        } else {
             voto.setElector(buscarElectorPorId(electores, idVotante));
             listaAuxiliar = buscarListaPorNumero(listas, numeroListaVotadaUno);
             voto.agregarListaVotada(listaAuxiliar);
@@ -114,6 +162,12 @@ public class Controlador {
         }
 
         votos.add(voto);
+
+        /*
+                NO SE ASUSTEN. EL RETURN ES DE PRUEBA. LO UTILIZO PARA QUE CADA VEZ QUE SE HAGA CLICK EN VOTAR
+                                    SE IMPRIMA POR CONSOLA EL VOTO GENERADO
+         */
+        return voto;
     }
 
     /**
@@ -123,7 +177,7 @@ public class Controlador {
      * @param numeroDeLista
      * @return
      */
-    private static ListaPolitica buscarListaPorNumero(List<ListaPolitica> listas, int numeroDeLista) {
+    private  ListaPolitica buscarListaPorNumero(List<ListaPolitica> listas, int numeroDeLista) {
         ListaPolitica listaEncontrada = null;
 
         Integer numeroLista = numeroDeLista;
@@ -144,7 +198,7 @@ public class Controlador {
      * @param nombreDeUsuario
      * @return
      */
-    public static boolean existeUsuario(String nombreDeUsuario) {
+    public  boolean existeUsuario(String nombreDeUsuario) {
         /*
             IMPLEMENTAR ESTE METODO
          */
@@ -159,7 +213,7 @@ public class Controlador {
      * @param contrasenia
      * @return
      */
-    public static boolean verificadorDeUsuario(String usuario, String contrasenia) {
+    public  boolean verificadorDeUsuario(String usuario, String contrasenia) {
         if (usuario.isBlank() || contrasenia.isBlank() || contrasenia.isEmpty()) {
             return false;
         }
@@ -176,7 +230,7 @@ public class Controlador {
      *
      * @return
      */
-    public static List<ListaPolitica> getListasPolticas() {
+    public  List<ListaPolitica> getListasPolticas() {
         return listas;
     }
 }
