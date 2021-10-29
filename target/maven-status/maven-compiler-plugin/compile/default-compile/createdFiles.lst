@@ -51,6 +51,7 @@ com\gruposeispoo\vistas\Index$3.class
 com\gruposeispoo\app\Controlador.class
 com\gruposeispoo\vistas\admin\AdminGraficoPrueba.class
 com\gruposeispoo\clases\Distrito.class
+com\gruposeispoo\vistas\usuarios\UserVotoCatePane$5.class
 com\gruposeispoo\vistas\usuarios\UserVotoCatePane$2.class
 com\gruposeispoo\vistas\usuarios\UserVotoPane$5.class
 com\gruposeispoo\vistas\admin\AdminLoginPane$7.class

@@ -32,8 +32,8 @@ public class Controlador {
 
     /**
      * SINGLETON
-     * 
-     * @return 
+     *
+     * @return
      */
     public static Controlador getInstancia() {
         if (controlador == null) {
@@ -42,28 +42,53 @@ public class Controlador {
         return controlador;
     }
 
-    public  int getIdVotante() {
+    public int getIdVotante() {
         return idVotante;
     }
 
-    public  void setIdVotante(int idDelVotante) {
+    public void setIdVotante(int idDelVotante) {
         idVotante = idDelVotante;
     }
 
-    public  int getNumeroListaVotadaUno() {
+    public int getNumeroListaVotadaUno() {
         return numeroListaVotadaUno;
     }
 
-    public  int getNumeroListaVotadaDos() {
+    public int getNumeroListaVotadaDos() {
         return numeroListaVotadaDos;
     }
 
-    public  void setNumeroListaVotadaUno(int numeroListaVotadaUno) {
+    public void setNumeroListaVotadaUno(int numeroListaVotadaUno) {
         this.numeroListaVotadaUno = numeroListaVotadaUno;
     }
 
-    public  void setNumeroListaVotadaDos(int numeroListaVotadaDos) {
+    public void setNumeroListaVotadaDos(int numeroListaVotadaDos) {
         this.numeroListaVotadaDos = numeroListaVotadaDos;
+    }
+
+    /**
+     * Obtener todas las listas votadas, ordenadas de acuerdo al ingreso del
+     * voto y pueden estar repetidas, justamente esa es la utilidad que se busca
+     *
+     *
+     * @return
+     */
+    public List<ListaPolitica> listasVotadas() {
+        List<ListaPolitica> listasVotadasXVoto = new ArrayList<>();
+
+        if (!votos.isEmpty()) {
+            votos.forEach(voto -> {
+                if (voto.getListas() != null) {
+                    voto.getListas().forEach(listaVotada -> {
+                        if (listaVotada.getNumero() != 0) {
+                            listasVotadasXVoto.add(listaVotada);
+                        }
+                    });
+                }
+            });
+        }
+
+        return listasVotadasXVoto;
     }
 
     /**
@@ -73,7 +98,7 @@ public class Controlador {
      * @param numeroDeLista
      * @return
      */
-    private  Elector buscarElectorPorId(List<Elector> electores, int idElector) {
+    private Elector buscarElectorPorId(List<Elector> electores, int idElector) {
         Elector electorEncontrado = null;
 
         for (Elector elector : electores) {
@@ -92,7 +117,7 @@ public class Controlador {
      * @param id
      * @return
      */
-    public  boolean existeElector(int id) {
+    public boolean existeElector(int id) {
         for (Elector elector : electores) {
             if (elector.getId() == id) {
                 return true;
@@ -114,7 +139,7 @@ public class Controlador {
      *
      * Voto por lista: -
      */
-    public  Voto nuevoVoto() {
+    public Voto nuevoVoto() {
         Voto voto = new Voto();
         ListaPolitica listaAuxiliar;
 
@@ -177,7 +202,7 @@ public class Controlador {
      * @param numeroDeLista
      * @return
      */
-    private  ListaPolitica buscarListaPorNumero(List<ListaPolitica> listas, int numeroDeLista) {
+    private ListaPolitica buscarListaPorNumero(List<ListaPolitica> listas, int numeroDeLista) {
         ListaPolitica listaEncontrada = null;
 
         Integer numeroLista = numeroDeLista;
@@ -198,7 +223,7 @@ public class Controlador {
      * @param nombreDeUsuario
      * @return
      */
-    public  boolean existeUsuario(String nombreDeUsuario) {
+    public boolean existeUsuario(String nombreDeUsuario) {
         /*
             IMPLEMENTAR ESTE METODO
          */
@@ -213,7 +238,7 @@ public class Controlador {
      * @param contrasenia
      * @return
      */
-    public  boolean verificadorDeUsuario(String usuario, String contrasenia) {
+    public boolean verificadorDeUsuario(String usuario, String contrasenia) {
         if (usuario.isBlank() || contrasenia.isBlank() || contrasenia.isEmpty()) {
             return false;
         }
@@ -230,7 +255,7 @@ public class Controlador {
      *
      * @return
      */
-    public  List<ListaPolitica> getListasPolticas() {
+    public List<ListaPolitica> getListasPolticas() {
         return listas;
     }
 }

@@ -1,7 +1,13 @@
 package com.gruposeispoo.vistas.admin;
 
+import com.gruposeispoo.app.Controlador;
+import com.gruposeispoo.vistas.Index;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -11,36 +17,59 @@ import org.jfree.data.category.DefaultCategoryDataset;
 
 public class AdminGraficoPrueba extends javax.swing.JPanel {
 
-    public AdminGraficoPrueba() {
+    private Controlador controlador;
+    private Index contenedor;
+    private List<String> listaPoliticas;
+    private Set<String> listasPoliticasConjunto;
+
+    /**
+     *
+     * CONSTRUCTOR
+     *
+     *
+     */
+    public AdminGraficoPrueba(Index contenedor) {
         initComponents();
-        crearGraficoBarras("Pregunta 1");
-        crearGraficoBarras("Pregunta 2");
+        this.contenedor = contenedor;
+        controlador = Controlador.getInstancia();
+        listaPoliticas = new ArrayList<>();
+        listasPoliticasConjunto = new HashSet<>();
+        crearGraficoBarras("Votos por lista");
     }
 
     private CategoryDataset crearDataset() {
-        final String escala1 = "Totalmente desacuerdo";
-        final String escala2 = "Desacuerdo";
-        final String escala3 = "Neutro";
-        final String escala4 = "De acuerdo";
-        final String escala5 = "Totalmente de acuerdo";
-        
-        final String pregunta = "Respuestas";
-        
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-        //Escala 1 = 1 sola persona respondio
-        dataset.addValue(1.0, escala1, pregunta);
-        dataset.addValue(0.0, escala2, pregunta);
-        dataset.addValue(2.0, escala3, pregunta);
-        dataset.addValue(4.0, escala4, pregunta);
-        dataset.addValue(4.0, escala5, pregunta);
-        
+
+        if (!(controlador.listasVotadas().isEmpty())) {
+            controlador.listasVotadas().forEach(listaVotada -> {
+                listasPoliticasConjunto.add(listaVotada.getNombre());
+            });
+
+            controlador.listasVotadas().forEach(listaVotada -> {
+                listaPoliticas.add(listaVotada.getNombre());
+            });
+
+            double contador = 0.0;
+
+            for (String listaPoliticaExterna : listasPoliticasConjunto) {
+                for (String listaPoliticaInterna : listaPoliticas) {
+                    if (listaPoliticaInterna.equals(listaPoliticaExterna)) {
+                        contador++;
+                    }
+                }
+                System.out.println(contador);
+                dataset.addValue(contador, listaPoliticaExterna, "Cantidad de votos segun lista");
+            }
+
+        }
+
         return dataset;
     }
 
     private void crearGraficoBarras(String nombre) {
-        JFreeChart barras = ChartFactory.createBarChart(nombre, "Personas", "Escala", crearDataset(), PlotOrientation.VERTICAL, true, true, false);
+        JFreeChart barras = ChartFactory.createBarChart(nombre, "Listas Politicas", "Cantidad De Votos", crearDataset(), PlotOrientation.VERTICAL, true, true, false);
         ChartPanel panel = new ChartPanel(barras);
-        panel.setPreferredSize(new Dimension(600,370));
+        panel.setPreferredSize(new Dimension(600, 370));
         contentContainer.add(panel);
     }
 
@@ -163,10 +192,13 @@ public class AdminGraficoPrueba extends javax.swing.JPanel {
         btnVotarTxt.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
         btnVotarTxt.setForeground(new java.awt.Color(255, 255, 255));
         btnVotarTxt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        btnVotarTxt.setText("VOTAR");
+        btnVotarTxt.setText("REGRESAR");
         btnVotarTxt.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnVotarTxt.setOpaque(true);
         btnVotarTxt.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnVotarTxtMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnVotarTxtMouseEntered(evt);
             }
@@ -221,7 +253,7 @@ public class AdminGraficoPrueba extends javax.swing.JPanel {
             .addGroup(bgContainerLayout.createSequentialGroup()
                 .addComponent(headerContainer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 412, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -235,7 +267,7 @@ public class AdminGraficoPrueba extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(bgContainer, javax.swing.GroupLayout.DEFAULT_SIZE, 586, Short.MAX_VALUE)
+                .addComponent(bgContainer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -267,6 +299,11 @@ public class AdminGraficoPrueba extends javax.swing.JPanel {
     private void btnVotarTxtMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVotarTxtMouseExited
         btnVotarTxt.setBackground(new Color(43, 179, 205));
     }//GEN-LAST:event_btnVotarTxtMouseExited
+
+    private void btnVotarTxtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVotarTxtMouseClicked
+        contenedor.setBotoneraEnabled(true);
+        contenedor.generarNuevaInstanciaDeAuditoria();
+    }//GEN-LAST:event_btnVotarTxtMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

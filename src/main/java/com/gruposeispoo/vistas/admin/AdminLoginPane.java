@@ -8,10 +8,7 @@ import javax.swing.JLabel;
 
 public class AdminLoginPane extends javax.swing.JPanel {
 
-    /*
-        COMENTADO: NO ELIMINAR EL ATRIBUTO DE ABAJO (SE ESTA TRABAJANDO EN LA CLASE adminGraficoPrueba
-     */
-    private AdminGraficoPrueba adminGraficoPrueba = new AdminGraficoPrueba();
+    private AdminGraficoPrueba adminGraficoPrueba;
     private Controlador controlador;
     private Index contenedor;
     /**
@@ -32,6 +29,7 @@ public class AdminLoginPane extends javax.swing.JPanel {
         initComponents();
         this.contenedor = contenedor;
         controlador = Controlador.getInstancia();
+        adminGraficoPrueba = new AdminGraficoPrueba(contenedor);
         setIngresoSistemaAuditor(false);
     }
 
@@ -584,7 +582,8 @@ public class AdminLoginPane extends javax.swing.JPanel {
     }//GEN-LAST:event_headerBarContainerMousePressed
 
     private void btnIngresarTxtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnIngresarTxtMouseClicked
-        //NO ELIMINAR LA LINEA DE ABAJO:SE ESTÁTRABAJANDO EN adminGraficoPrueba
+        adminGraficoPrueba = new AdminGraficoPrueba(contenedor);
+        contenedor.setBotoneraEnabled(false);
         contenedor.actualizarContentPane(adminGraficoPrueba);
     }//GEN-LAST:event_btnIngresarTxtMouseClicked
 

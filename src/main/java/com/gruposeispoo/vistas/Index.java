@@ -12,14 +12,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import org.netbeans.lib.awtextra.AbsoluteConstraints;
 
-
 public class Index extends javax.swing.JFrame {
 
     private IndexPane indexPane;
     private AdminLoginPane adminLoginPane;
     private UserLoginPane userLoginPane;
     private Controlador controlador;
-    
+
     /**
      *
      * CONSTRUCTOR
@@ -33,17 +32,29 @@ public class Index extends javax.swing.JFrame {
         controlador = Controlador.getInstancia();
         init();
     }
-    
+
     /**
-     * Genera una nueva instancia de votación. Esto significa un nuevo elector realizando el voto.
-     * 
-     * @param userLoginPane 
+     * Genera una nueva instancia de votación. Esto significa un nuevo elector
+     * realizando el voto.
+     *
+     * @param userLoginPane
      */
-    public void generarNuevaInstanciaDeVotacion(){
+    public void generarNuevaInstanciaDeAuditoria() {
         this.userLoginPane = new UserLoginPane(this);
         actualizarContentPane(this.userLoginPane);
     }
-    
+
+    /**
+     * Genera una nueva instancia de votación. Esto significa un nuevo elector
+     * realizando el voto.
+     *
+     * @param userLoginPane
+     */
+    public void generarNuevaInstanciaDeVotacion() {
+        this.adminLoginPane = new AdminLoginPane(this);
+        actualizarContentPane(this.adminLoginPane);
+    }
+
     /**
      *
      * @param nuevoContenedor
