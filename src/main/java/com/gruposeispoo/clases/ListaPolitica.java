@@ -52,6 +52,7 @@ public class ListaPolitica {
         this.senadores = senadores;
         this.distrito = distrito;
         this.partidoPolitico = partidoPolitico;
+        this.distrito.agregarListaPolitica(this);
     }
 
     public String getNombre() {
