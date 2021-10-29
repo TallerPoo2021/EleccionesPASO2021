@@ -14,7 +14,7 @@ public class Controlador {
     private int numeroListaVotadaUno = 0;
     private int numeroListaVotadaDos = 0;
     private List<ListaPolitica> listas;
-    private List<Elector> electores;
+    private List<Elector> electores = Admin.generarElectores();
     private List<Voto> votos;
     private Admin admin;
     private static Controlador controlador;
@@ -27,7 +27,6 @@ public class Controlador {
         admin = new Admin();
         listas = Admin.generaListas();
         votos = new ArrayList<>();
-        electores = Admin.generarElectores();
     }
 
     /**
@@ -117,13 +116,13 @@ public class Controlador {
      * @param id
      * @return
      */
-    public boolean existeElector(int id) {
+    public Elector existeElector(int id) {
         for (Elector elector : electores) {
             if (elector.getId() == id) {
-                return true;
+                return elector;
             }
         }
-        return false;
+        return null;
     }
 
     /**

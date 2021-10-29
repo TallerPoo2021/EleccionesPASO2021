@@ -5,13 +5,11 @@ import java.util.Objects;
 
 public class PadronElectoral {
 	private int anioActual;
-	private List<TipoDocumento> documentosValidos;
 	private List<Elector> electores; // habilitados
 
-	public PadronElectoral(int anioActual, List<TipoDocumento> documentosValidos,
+	public PadronElectoral(int anioActual,
 			List<Elector> electores) {
 		this.anioActual = anioActual;
-		this.documentosValidos = documentosValidos;
 		this.electores = electores;
 	}
 
@@ -21,14 +19,6 @@ public class PadronElectoral {
 
 	protected void setAnioActual(int anioActual) {
 		this.anioActual = anioActual;
-	}
-
-	protected List<TipoDocumento> getDocumentosValidos() {
-		return documentosValidos;
-	}
-
-	protected void setDocumentosValidos(List<TipoDocumento> documentosValidos) {
-		this.documentosValidos = documentosValidos;
 	}
 
 	protected List<Elector> getElectores() {

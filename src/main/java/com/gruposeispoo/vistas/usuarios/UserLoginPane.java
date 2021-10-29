@@ -25,7 +25,7 @@ public class UserLoginPane extends javax.swing.JPanel {
         initComponents();
         this.contenedor = contenedor;
         controlador = Controlador.getInstancia();
-        userVotoPane = new UserVotoPane(this.contenedor);
+        userVotoPane = new UserVotoPane(this.contenedor, electorFullName);
     }
 
     /**
@@ -376,7 +376,7 @@ public class UserLoginPane extends javax.swing.JPanel {
 
         enteroRand += 11;
 
-        if (controlador.existeElector(enteroRand)) {
+        if (controlador.existeElector(enteroRand) != null) {
             controlador.setIdVotante(enteroRand);
             /*
             SETEO DEL INPUT CHECKER - PASO 1

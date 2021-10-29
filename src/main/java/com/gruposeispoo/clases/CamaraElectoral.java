@@ -4,18 +4,21 @@ import java.util.*;
 
 public class CamaraElectoral {
 
-	private static Distrito[] distritos;
-	private List<PartidoPolitico> partidosPoliticos;
-	private PadronElectoral padronOficial;
+	private static final PadronElectoral padronOficial = new PadronElectoral(2021, Admin.generarElectores());
+	private static final Distrito[] distritos = crearDistritos();
+	private static final List<PartidoPolitico> partidosPoliticos = crearPartidosPoliticos();
 
-	public CamaraElectoral(Distrito[] distritos, List<PartidoPolitico> partidosPoliticos,
-			PadronElectoral padronOficial) {
-		this.distritos = crearDistritos();
-		this.partidosPoliticos = partidosPoliticos;
-		this.padronOficial = padronOficial;
+
+	private static List<PartidoPolitico> crearPartidosPoliticos(){
+		List<ListaPolitica> listasPoliticas = new ArrayList<>(Admin.generaListas());
+		List<PartidoPolitico> partidosPoliticos = new ArrayList<>();
+		for (ListaPolitica listaPolitica : listasPoliticas) {
+			if (!partidosPoliticos.contains(listaPolitica.getPartidoPolitico())) partidosPoliticos.add(listaPolitica.getPartidoPolitico());
+		}
+		return null;
 	}
 
-	private Distrito[] crearDistritos(){
+	private static Distrito[] crearDistritos(){
 		/*
 		Distrito entreRios = new Distrito(5,4,"Entre Rios", repartirPadron("Entre Rios"));
 		Distrito corrientes = new Distrito(3, 3, "Corrientes", repartirPadron("Corrientes"));
@@ -27,7 +30,7 @@ public class CamaraElectoral {
 		return new Distrito[]{ new Distrito(5,4,"Entre Rios", repartirPadron("Entre Rios")), new Distrito(3, 3, "Corrientes", repartirPadron("Corrientes")), new Distrito(5, 4, "Santa Fe", repartirPadron("Santa Fe")), new Distrito(8, 3, "Mendoza", repartirPadron("Mendoza")), new Distrito(7, 9, "Salta", repartirPadron("Salta")), new Distrito(4, 3, "Cordoba", repartirPadron("Cordoba"))};
 	}
 
-	private List<Elector> repartirPadron (String distrito){
+	private static List<Elector> repartirPadron (String distrito){
 		List<Elector> padronDistrito = new ArrayList<>();
 		for (Elector elector : padronOficial.getElectores()) {
 			if (elector.getDomicilio().getProvincia().equalsIgnoreCase(distrito)){
@@ -39,50 +42,22 @@ public class CamaraElectoral {
 
 	public static Distrito encontrarDistrito(String nombreDistrito){
 		for (Distrito distrito : distritos) {
+			System.out.println(distrito.getNombre());
 			if (distrito.getNombre().equalsIgnoreCase(nombreDistrito)) return distrito;
 		}
 		return null;
 	}
 
-	protected Distrito[] getDistritos() {
+	protected static Distrito[] getDistritos() {
 		return distritos;
 	}
 
-	protected void setDistritos(Distrito[] distritos) {
-		this.distritos = distritos;
-	}
-
-	protected List<PartidoPolitico> getPartidosPoliticos() {
+	protected static List<PartidoPolitico> getPartidosPoliticos() {
 		return partidosPoliticos;
 	}
 
-	protected void setPartidosPoliticos(List<PartidoPolitico> partidosPoliticos) {
-		this.partidosPoliticos = partidosPoliticos;
-	}
-
-	protected PadronElectoral getPadronOficial() {
+	protected static PadronElectoral getPadronOficial() {
 		return padronOficial;
-	}
-
-	protected void setPadronOficial(PadronElectoral padronOficial) {
-		this.padronOficial = padronOficial;
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(partidosPoliticos);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		CamaraElectoral other = (CamaraElectoral) obj;
-		return Objects.equals(partidosPoliticos, other.partidosPoliticos);
 	}
 
 	public static MesaElectoral encontrarMesa(int codigoMesa){
@@ -97,8 +72,6 @@ public class CamaraElectoral {
 		}
 		return null;
 	}
-
-	// -----
 	
 	public boolean verificarLista(List<Candidato> candidatos, ListaPolitica listaPolitica) {
 		for (Candidato candidato : candidatos) {
@@ -124,10 +97,6 @@ public class CamaraElectoral {
 	public double getPorcentajeElectores(Distrito distrito) {
 		return ((double) distrito.getPadron().size()*100)/((double) padronOficial.getElectores().size());
 	}
-
-//	public Map<PartidoPolitico, Double> getPorcentajeVotos(Distrito distrito) {
-//
-//	}
 
 	public Map <ListaPolitica, Double> getPorcentajeGeneral() {
 		Map <ListaPolitica, Double> porcentajesListaPolticas = new HashMap<>();
@@ -155,8 +124,6 @@ public class CamaraElectoral {
 		}
 		return resultado;
 	}
-
-	// -----
 
 	@Override
 	public String toString() {
