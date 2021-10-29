@@ -46,17 +46,12 @@ public class Admin {
 		List<ListaPolitica> listasPoliticasMendoza;
 		List<ListaPolitica> listasPoliticasSalta;
 		List<ListaPolitica> listasPoliticasCordoba;
-		Distrito entreRios = new Distrito(0, 5, "Entre Rios",
-				listasPoliticasEntreRios = new ArrayList<>());
-		Distrito corrientes = new Distrito(3, 3, "Corrientes",
-				listasPoliticasCorrientes = new ArrayList<>());
-		Distrito santaFe = new Distrito(3, 9, "Santa Fe",
-				listasPoliticasSantaFe = new ArrayList<>());
-		Distrito mendoza = new Distrito(3, 5, "Mendoza",
-				listasPoliticasMendoza = new ArrayList<>());
-		Distrito salta = new Distrito(0, 3, "Salta", listasPoliticasSalta = new ArrayList<>());
-		Distrito cordoba = new Distrito(3, 9, "Cordoba",
-				listasPoliticasCordoba = new ArrayList<>());
+		Distrito entreRios = new Distrito(0, 5, "Entre Rios",null);
+		Distrito corrientes = new Distrito(3, 3, "Corrientes",null);
+		Distrito santaFe = new Distrito(3, 9, "Santa Fe",null);
+		Distrito mendoza = new Distrito(3, 5, "Mendoza",null);
+		Distrito salta = new Distrito(0, 3, "Salta",null);
+		Distrito cordoba = new Distrito(3, 9, "Cordoba",null);
 
 		/*
 		 * 
@@ -133,8 +128,10 @@ public class Admin {
 		ListaPolitica todos = new ListaPolitica("Todos", 501, dipuCorrientesfrenteDeTodos,
 				senCorrienteFrenteDeTodos, corrientes, frenteDeTodos);
 		ListaPolitica felicidad = new ListaPolitica("Felicidad", 227, dipuSaltaFelicidad, null,
-				salta, felicidadParaTodos);
+				CamaraElectoral.encontrarDistrito("Salta"), felicidadParaTodos);
 
+		System.out.println(felicidad);
+		
 		todasLasListasPoliticas.add(podemosEntreRios);
 		todasLasListasPoliticas.add(juntosPorEntreRios);
 		todasLasListasPoliticas.add(compromisoFederal);
@@ -177,10 +174,11 @@ public class Admin {
 
 	public static void main(String[] args) {
 		Admin ad = new Admin();
-		List<List<Candidato>> asdf = ad.generarListaSenadoresTotales();
-		for (List<Candidato> listq : asdf) {
-			System.out.println("###");
-			System.out.println(listq);
-		}
+		ad.generaListas();
+//		List<List<Candidato>> asdf = ad.generarListaSenadoresTotales();
+//		for (List<Candidato> listq : asdf) {
+//			System.out.println("###");
+//			System.out.println(listq);
+//		}
 	}
 }
