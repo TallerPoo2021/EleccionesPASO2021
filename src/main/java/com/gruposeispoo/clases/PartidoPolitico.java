@@ -1,0 +1,105 @@
+package com.gruposeispoo.clases;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
+import javax.swing.text.html.HTMLDocument.HTMLReader.ParagraphAction;
+
+public class PartidoPolitico {
+	private boolean esAlianza;
+	private String nombre;
+	private List<ListaPolitica> listaPolitica = new ArrayList<ListaPolitica>(); // representa
+	private List<PartidoPolitico> partidoPolitico;// tiene
+
+	/**
+	 * Contructor parametrizado para los que no son alianzas.
+	 *
+	 * @param nombre, nombre del partido
+	 *
+	 */
+	public PartidoPolitico(String nombre) {
+		this.nombre = nombre;
+	}
+
+	/**
+	 * Contructor parametrizado para los que si son alianzas.
+	 *
+	 * @param nombre,          nombre del partido
+	 * @param partidoPolitico, partido politico que pertenecen
+	 */
+	public PartidoPolitico(String nombre, List<PartidoPolitico> partidoPolitico) {
+		this.nombre = nombre;
+		this.partidoPolitico = partidoPolitico;
+	}
+
+	public PartidoPolitico(boolean esAlianza, String nombre, List<ListaPolitica> listaPolitica) {
+		this.esAlianza = esAlianza;
+		this.nombre = nombre;
+		this.listaPolitica = listaPolitica;
+	}
+
+	// Constructor para los partidos que son alianzas
+	public PartidoPolitico(boolean esAlianza, String nombre, List<ListaPolitica> listaPolitica,
+			List<PartidoPolitico> partidoPolitico) {
+		this.esAlianza = esAlianza;
+		this.nombre = nombre;
+		this.listaPolitica = listaPolitica;
+		this.partidoPolitico = partidoPolitico;
+	}
+
+	protected boolean isEsAlianza() {
+		return esAlianza;
+	}
+
+	protected void setEsAlianza(boolean esAlianza) {
+		this.esAlianza = esAlianza;
+	}
+
+	protected String getNombre() {
+		return nombre;
+	}
+
+	protected void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	protected List<ListaPolitica> getListaPolitica() {
+		return listaPolitica;
+	}
+
+	protected void setListaPolitica(List<ListaPolitica> listaPolitica) {
+		this.listaPolitica = listaPolitica;
+	}
+
+	protected List<PartidoPolitico> getPartidoPolitico() {
+		return partidoPolitico;
+	}
+
+	protected void setPartidoPolitico(List<PartidoPolitico> partidoPolitico) {
+		this.partidoPolitico = partidoPolitico;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(nombre, partidoPolitico);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		PartidoPolitico other = (PartidoPolitico) obj;
+		return Objects.equals(nombre, other.nombre)
+				&& Objects.equals(partidoPolitico, other.partidoPolitico);
+	}
+
+	@Override
+	public String toString() {
+		return "\n\t\t\tPartidoPolitico: " + "\n\t\t\t\tesAlianza=" + esAlianza + "\n\t\t\t\tnombre=" + nombre + "\n\t\t\t\tsubpartidos=" + partidoPolitico;
+	}
+}
